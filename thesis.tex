@@ -1,0 +1,88 @@
+\documentclass{book}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\usepackage{color}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\newcounter{ipythoncounter}
+\setcounter{ipythoncounter}{1}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}\,}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\renewcommand{\ttdefault}{pcr}
+\lstset{
+  aboveskip=\bigskipamount,
+  belowskip=\bigskipamount,
+  basicstyle=\footnotesize\ttfamily,
+  language=Python,
+  numbers=left,
+  stepnumber=9999,
+  numberfirstline=true,
+  xleftmargin=2cm,
+}
+
+\lstnewenvironment{ipythoninput}{
+  \setcounter{lstnumber}{\value{ipythoncounter}}
+  \renewcommand{\thelstnumber}{
+    \bf\ttfamily In [\the\value{ipythoncounter}]:}
+  \lstset{
+    frame=single,
+    frameround=tttt,
+    name=ipythoninput,
+  }
+}{\addtocounter{ipythoncounter}{1}}
+
+\lstnewenvironment{ipythonoutput}{
+  \addtocounter{ipythoncounter}{-1}
+  \setcounter{lstnumber}{\value{ipythoncounter}}
+  \renewcommand{\thelstnumber}{
+    \bf\ttfamily Out[\the\value{ipythoncounter}]:}
+  \lstset{
+    name=ipythoninput
+  }
+}{\addtocounter{ipythoncounter}{1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+
+
+\DeclareMathOperator{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\RR}{\mathbb{R}}
+\DeclareMathOperator{\CC}{\mathbb{C}}
+\DeclareMathOperator{\hg}{\mathfrak{h}_g}
+\newcommand{\dx}{\,\mathrm{d}x}
+\newcommand{\dt}{\,\mathrm{d}t}
+\newcommand{\dQ}{\,\mathrm{d}Q}
+\DeclareMathOperator{\DivC}{\mathcal{C}}
+\DeclareMathOperator{\DivD}{\mathcal{D}}
+\DeclareMathOperator{\RCV}{\boldsymbol{K}}
+\DeclareMathOperator{\Abel}{\boldsymbol{A}}
+\DeclareMathOperator{\HalfLattice}{\Lambda_{1/2}}
+
+\newcommand{\thchar}[2] {\begin{bmatrix}#1\\#2\end{bmatrix}}
+\newcommand{\thcharsm}[2] {\left[ \begin{smallmatrix} #1
+      \\ #2 \end{smallmatrix} \right]}
+
+\title{Ph.D. Thesis}
+\author{Chris Swierczewski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\end{document}
