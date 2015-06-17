@@ -1,17 +1,22 @@
-\documentclass{book}
+\documentclass[twoside,proquest,10pt]{uwthesis}
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{amssymb}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \usepackage{graphicx}
+%\usepackage{caption}
+%\usepackage{subcaption}
 
 \usepackage{color}
 \usepackage{listings}
 \usepackage{upquote}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,decorations,decorations.markings}
 
 \newcounter{ipythoncounter}
 \setcounter{ipythoncounter}{1}
@@ -52,19 +57,23 @@
 
 
 \newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
 
 \theoremstyle{definition}
 \newtheorem{example}[theorem]{Example}
 
-
+\newcommand{\secondkind}[2]{\omega_{#1}^{(#2)}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\dx}{\,\mathrm{d}x}
+\newcommand{\dt}{\,\mathrm{d}t}
+\newcommand{\dQ}{\,\mathrm{d}Q}
+\newcommand{\PP}[1]{\mathrm{P}^#1 \!}
 \DeclareMathOperator{\ZZ}{\mathbb{Z}}
 \DeclareMathOperator{\RR}{\mathbb{R}}
 \DeclareMathOperator{\CC}{\mathbb{C}}
 \DeclareMathOperator{\hg}{\mathfrak{h}_g}
-\newcommand{\dx}{\,\mathrm{d}x}
-\newcommand{\dt}{\,\mathrm{d}t}
-\newcommand{\dQ}{\,\mathrm{d}Q}
 \DeclareMathOperator{\DivC}{\mathcal{C}}
 \DeclareMathOperator{\DivD}{\mathcal{D}}
 \DeclareMathOperator{\RCV}{\boldsymbol{K}}
@@ -81,8 +90,32 @@
 
 \begin{document}
 
-\maketitle
 
-\tableofcontents
+% preliminary pages
+%
+%\prelimpages
+%\include{prelim}
+
+% text pages
+%
+%\textpages
+%\include{chap1}
+%\include{chap2}
+%\include{chap3}
+%\include{chap4}
+\include{chapters/riemannsurfaces}
+%\include{chapters/kp}
+
+% bibliography
+%
+%\bibliographystyle{plain}
+%\bibliography{thesis}
+
+% appendices
+%
+%\appendix
+%\include{appxa}
+%\include{appxb}
+%\include{vita}
 
 \end{document}

@@ -1,0 +1,42 @@
+\chapter*{Riemann Surfaces and Algebraic Curves}
+
+\section{Algebraic Curves}
+
+\section{Riemann Surfaces}
+
+The relationships between algebraic curves and Riemann surfaces are embodied by
+the following two theorems \cite{Griffiths89}.
+
+\begin{theorem} \label{thm:normalization}
+  {\bf (Normalization Theorem.)} For any irreducible algebraic curve $C
+  \subset \PP{2}\CC$ there exists a compact Riemann surface $X$ and
+  a holomorphic mapping
+  \[
+      \sigma : X \to \PP{2}\CC,
+  \]
+  such that $\sigma( X ) = C$ and $\sigma$ is injective on the
+  inverse image of the set of smooth points of $C$.
+\end{theorem}
+
+A Riemann surface together with the mapping $\sigma$ is called the {\it
+  normalization of $C$}. Loosely speaking, the normalization theorem states
+that an algebraic curve is a Riemann surface except at the singular points.
+
+Conversely, every compact Riemann surface can be represented by an algebraic
+curve.
+\begin{theorem} \label{thm: repr-theorem}
+  Any compact Riemann surface $X$ can be obtained through the normalization of
+  a certain plane algebraic curve $C$ with at most ordinary double points. That
+  is, there exists a holomorphic mapping
+  \[
+      \sigma : X \to \PP{2}\CC
+  \]
+  such that $\sigma(X)$ is an algebraic curve possessing at most ordinary
+  double points.
+\end{theorem}
+Many of the geometric algorithms presented in this document are designed to
+avoid singular points. Except, for example, when we want to integrate a 1-form
+along a path leading to a singular point in which case we ``unwrap'' the
+singularity using Puiseux series. This is discussed in more detail in the
+following section. However, because of this we use the terms ``curve'' and
+``Riemann surface'' interchangably.
