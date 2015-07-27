@@ -1,0 +1,61 @@
+\chapter{Introduction - A Connection Between Non-linear Waves and Algebraic Curves}
+
+\section{The Kadomtsev-Petviashvili Equation}
+
+The primary goal of this thesis is to efficiently compute a large class of
+periodic solutions, the so-called {\it finite genus solutions}, to the
+Kadomtsev-Petviashvili (KP) equation
+\begin{equation} \label{eqn:kp}
+  3u_{yy} = \frac{\partial}{\partial x} \big(
+  4u_t - ( 6uu_x + u_{xxx} )
+  \big).
+\end{equation}
+these finite genus solutions, as we will see, have a deep and fascinating
+connection to the theory of complex algebraic curves and Riemann surfaces.
+
+The KP equation appears in various applications, including plasma physics [XXX]
+and the study of water waves [XXX]. For example, the KP equation can be derived
+by taking shallow water, long-wavelengths, weakly two-dimensional
+approximations of solutions to the Euler equation [XXX].
+
+A major and important discovery due to Zakharov and Shabat [XXX] is that the KP
+equation can be written as a Lax pair [XXX]. Let $\Psi = \Psi(x,y,t)$ be an
+auxiliary wave function satisfying the linear system of equations,
+\begin{align} \label{eqn:lax:pair}
+  \Psi_y &= \Psi_{xx} + u\Psi, \label{eqn:lax-pair-a} \\ \Psi_t &= \Psi_{xxx} +
+  \tfrac{3}{2}u \Psi_x + \tfrac{3}{4}(u_x + w)\Psi. \label{eqn:lax-pair-b}
+\end{align}
+To see this, we begin by enforcing sufficient smoothness of $\Psi$ and
+therefore have it satisfy the compatibility condition $\Psi_{yt} =
+\Psi_{ty}$. Rewriting $\Psi_{yt}$ and $\Psi_{ty}$ solely in terms of
+$x$-derivatives of $\Psi$ and grouping by derivative order we obtain
+\begin{align} \label{eqn:compatibility-expansion}
+  \Psi_{yt}
+  &=
+  \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
+  \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
+  &=
+  \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
+  \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
+  \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi,
+\end{align}
+and
+\begin{align}
+  \Psi_{yt}
+  &=
+  \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
+  \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
+  &=
+  \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
+  \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
+  \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi.
+\end{align}
+Examining the order...[XXX]
+
+Given the Lax pair formulation of KP a natural question to ask is
+
+\section{Overview}
+
+Chapter \ref{ch:riemannsurfaces} provides the necessary algebreo-geometric
+background to this topic. An undergraduate-level understanding of complex
+analysis is required. Chapter \ref{ch:algorithms} 
