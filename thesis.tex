@@ -59,6 +59,7 @@
 
 
 \newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
@@ -70,11 +71,13 @@
 \newcommand{\dd}{\,\mathrm{d}}
 \newcommand{\dx}{\,\mathrm{d}x}
 \newcommand{\dt}{\,\mathrm{d}t}
+\newcommand{\dP}{\,\mathrm{d}P}
 \newcommand{\dQ}{\,\mathrm{d}Q}
 \newcommand{\PP}[1]{\mathrm{P}^#1 \!}
 \DeclareMathOperator{\ZZ}{\mathbb{Z}}
 \DeclareMathOperator{\RR}{\mathbb{R}}
 \DeclareMathOperator{\CC}{\mathbb{C}}
+\DeclareMathOperator{\hh}{\mathfrak{h}}
 \DeclareMathOperator{\hg}{\mathfrak{h}_g}
 \DeclareMathOperator{\DivC}{\mathcal{C}}
 \DeclareMathOperator{\DivD}{\mathcal{D}}
@@ -90,23 +93,43 @@
 \author{Chris Swierczewski}
 \date{\today}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% \setlength{\abovedisplayskip}{0.2cm}%{\smallskip}
+%% \setlength{\belowdisplayskip}{0.2cm}%{\smallskip}
 
 % preliminary pages
 %
-%\prelimpages
+\prelimpages
 %\include{prelim}
+
+\clearpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{quote}
+  \center
+  \em The standard of correctness and completeness necessary to get a computer
+  program to work at all is a couple of orders of magnitude higher than the
+  mathematical community's standard of valid proofs. Nonetheless, large
+  computer programs, even when they have been very carefully written and very
+  carefully tested, always seem to have bugs.
+  \center
+  \medskip
+  \raggedleft
+  \medskip
+  --- William P. Thurston
+\end{quote}
+\vspace*{\fill}
 
 % text pages
 %
 \textpages
-%\include{chap1}
-%\include{chap2}
-%\include{chap3}
-%\include{chap4}
 %\include{chapters/introduction}
-\include{chapters/chapter2}
+%\include{chapters/theta}
+\include{chapters/baker}
+%\include{chapters/chapter2}
 %\include{chapters/riemannsurfaces}
 %\include{chapters/kp}
 

@@ -8,51 +8,73 @@ Kadomtsev-Petviashvili (KP) equation
 \begin{equation} \label{eqn:kp}
   3u_{yy} = \frac{\partial}{\partial x} \big(
   4u_t - ( 6uu_x + u_{xxx} )
-  \big).
+  \big),
 \end{equation}
-these finite genus solutions, as we will see, have a deep and fascinating
-connection to the theory of complex algebraic curves and Riemann surfaces.
+where $u = u(x,y,t)$ describes the surface height of a two-dimensional shallow
+water wave. These finite genus solutions, as we will see, have a deep and
+fascinating connection to the theory of complex algebraic curves and Riemann
+surfaces.
 
-The KP equation appears in various applications, including plasma physics [XXX]
-and the study of water waves [XXX]. For example, the KP equation can be derived
-by taking shallow water, long-wavelengths, weakly two-dimensional
+The KP equation appears in various physical applications such as plasma physics
+[XXX] and the study of water waves [XXX]. For example, the KP equation can be
+derived by taking shallow water, long-wavelengths, weakly two-dimensional
 approximations of solutions to the Euler equation [XXX].
 
 A major and important discovery due to Zakharov and Shabat [XXX] is that the KP
 equation can be written as a Lax pair [XXX]. Let $\Psi = \Psi(x,y,t)$ be an
-auxiliary wave function satisfying the linear system of equations,
-\begin{align} \label{eqn:lax:pair}
+auxiliary wave function. The KP equation is equivalent to $\Psi$ satisfying the
+linear system of equations,
+\begin{align}
   \Psi_y &= \Psi_{xx} + u\Psi, \label{eqn:lax-pair-a} \\ \Psi_t &= \Psi_{xxx} +
   \tfrac{3}{2}u \Psi_x + \tfrac{3}{4}(u_x + w)\Psi. \label{eqn:lax-pair-b}
 \end{align}
-To see this, we begin by enforcing sufficient smoothness of $\Psi$ and
-therefore have it satisfy the compatibility condition $\Psi_{yt} =
-\Psi_{ty}$. Rewriting $\Psi_{yt}$ and $\Psi_{ty}$ solely in terms of
-$x$-derivatives of $\Psi$ and grouping by derivative order we obtain
-\begin{align} \label{eqn:compatibility-expansion}
-  \Psi_{yt}
-  &=
-  \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
-  \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
-  &=
-  \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
-  \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
-  \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi,
-\end{align}
-and
-\begin{align}
-  \Psi_{yt}
-  &=
-  \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
-  \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
-  &=
-  \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
-  \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
-  \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi.
-\end{align}
-Examining the order...[XXX]
 
-Given the Lax pair formulation of KP a natural question to ask is
+%% To see this, we begin by enforcing sufficient smoothness of $\Psi$ and
+%% therefore have it satisfy the compatibility condition $\Psi_{yt} =
+%% \Psi_{ty}$. Rewriting $\Psi_{yt}$ and $\Psi_{ty}$ solely in terms of
+%% $x$-derivatives of $\Psi$ and grouping by derivative order we obtain
+%% \begin{align} \label{eqn:compatibility-expansion}
+%%   \Psi_{yt}
+%%   &=
+%%   \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
+%%   \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
+%%   &=
+%%   \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
+%%   \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
+%%   \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi,
+%% \end{align}
+%% and
+%% \begin{align}
+%%   \Psi_{yt}
+%%   &=
+%%   \Psi_{5x} + \tfrac{5}{2}u \Psi_{xxx} +
+%%   \left( \tfrac{15}{4} u_x + \tfrac{3}{4} w \right)\Psi_{xx} + \notag \\
+%%   &=
+%%   \left( 3u_{xx} + \tfrac{3}{2} w_x + \tfrac{3}{2} u^2 \right)\Psi_x +
+%%   \left( u_t + \tfrac{3}{4} u_{xxx} + \tfrac{3}{4} w_{xx} + [XXX]
+%%   \tfrac{3}{4}u_x + \tfrac{3}{4} w \right) \Psi.
+%% \end{align}
+%% Examining the order...[XXX]
+
+The KP equation admits a large family of quasiperiodic solutions of the form
+\begin{equation} \label{eqn: kpsol}
+  u(x,y,t) = 2 \partial_x^2 \log \theta(Ux+Vy+Wt+z_0, \Omega) + c,
+\end{equation}
+where $\theta$ is the Riemann theta function.
+
+\begin{definition}[Riemann theta function] \label{def: riemanntheta}
+  The {\bf Riemann theta function} $\theta: \CC^g \times \hh_g \to \CC$
+  is defined in terms of its Fourier series:
+  \begin{equation} \label{eqn: riemanntheta}
+    \theta(z,\Omega) = \sum_{n \in \ZZ^g}
+    e^{2 \pi i \left( \tfrac{1}{2} n \cdot \Omega n + n \cdot z \right)}.
+  \end{equation}
+  This function converges absolutely and uniformly on compact sets in
+  $\CC^g \times \hh_g$ where $\hh_g$ is the space of all {\it ``Riemann
+    matrices''} --- complex symmetric matrices with positive definite
+  imaginary part.
+\end{definition}
+
 
 \section{Overview}
 
