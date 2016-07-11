@@ -1,3 +1,10 @@
+## specific thesis ignores
+auto
+chapters/auto
+chapters/old
+_region_.tex
+*.prv
+
 ## ipython notebooks
 .ipynb_checkpoints
 
