@@ -1,4 +1,4 @@
-\documentclass [10pt, proquest] {uwthesis}[2014/11/13]
+\documentclass[10pt, proquest]{uwthesis}[2014/11/13]
 
 \setcounter{tocdepth}{1}
 
@@ -6,64 +6,46 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{amssymb}
-%\usepackage{hyperref}
 \usepackage{graphicx}
-%\usepackage{caption}
-%\usepackage{subcaption}
-
 \usepackage{color}
-\usepackage{listings}
-\usepackage{upquote}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning,decorations,decorations.markings}
 
-\newcounter{ipythoncounter}
-\setcounter{ipythoncounter}{1}
-\renewcommand{\algorithmicrequire}{\textbf{Input:}\,}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
 \renewcommand{\ttdefault}{pcr}
-\lstset{
-  aboveskip=\bigskipamount,
-  belowskip=\bigskipamount,
-  basicstyle=\footnotesize\ttfamily,
-  language=Python,
-  numbers=left,
-  stepnumber=9999,
-  numberfirstline=true,
-  xleftmargin=2cm,
-}
+\lstdefinelanguage{Sage}[]{Python}
+{morekeywords={sage},
+sensitive=true}
+\lstset{frame=none,
+        showtabs=False,
+        showspaces=False,
+        showstringspaces=False,
+        commentstyle={\it\ttfamily\color{gray}},
+        keywordstyle={\bf\ttfamily\color{black}},
+        stringstyle ={\ttfamily\color{gray}},
+        language = Sage,
+        basicstyle={\footnotesize\ttfamily},
+        xleftmargin=1em,
+        aboveskip=1em,
+        belowskip=1em
+      }
 
-\lstnewenvironment{ipythoninput}{
-  \setcounter{lstnumber}{\value{ipythoncounter}}
-  \renewcommand{\thelstnumber}{
-    \bf\ttfamily In [\the\value{ipythoncounter}]:}
-  \lstset{
-    frame=single,
-    frameround=tttt,
-    name=ipythoninput,
-  }
-}{\addtocounter{ipythoncounter}{1}}
+% the quotation environment is used for section summaries
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\footnotesize}
 
-\lstnewenvironment{ipythonoutput}{
-  \addtocounter{ipythoncounter}{-1}
-  \setcounter{lstnumber}{\value{ipythoncounter}}
-  \renewcommand{\thelstnumber}{
-    \bf\ttfamily Out[\the\value{ipythoncounter}]:}
-  \lstset{
-    name=ipythoninput
-  }
-}{\addtocounter{ipythoncounter}{1}}
-
+\usepackage{enumitem}
+\setlist[1]{itemsep=-5pt}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
-
 \theoremstyle{definition}
 \newtheorem{example}[theorem]{Example}
 
@@ -97,9 +79,6 @@
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% \setlength{\abovedisplayskip}{0.2cm}%{\smallskip}
-%% \setlength{\belowdisplayskip}{0.2cm}%{\smallskip}
-
 % preliminary pages
 %
 \prelimpages
@@ -126,23 +105,25 @@
 % text pages
 %
 \textpages
-%\include{chapters/introduction}
-%\include{chapters/theta}
-\include{chapters/baker}
-%\include{chapters/chapter2}
-%\include{chapters/riemannsurfaces}
-%\include{chapters/kp}
+\include{chapters/1-introduction}
+\include{chapters/2-background}
+\include{chapters/3-abelfunctions}
+\include{chapters/4-kp}
+\include{chapters/5-determinantal}
 
 % bibliography
 %
-%\bibliographystyle{plain}
-%\bibliography{thesis}
+\bibliographystyle{plain}
+\bibliography{thesis}
 
 % appendices
 %
-%\appendix
-%\include{appxa}
-%\include{appxb}
-%\include{vita}
+\appendix
+\include{chapters/appendix}
+
 
 \end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

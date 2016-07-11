@@ -1,0 +1,54 @@
+\documentclass[12pt]{amsart}
+
+\title{Computing with Riemann Surfaces and Abelian Functions}
+
+\author{Chris Swierczewski}
+
+%\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+
+Riemann surfaces naturally appear in many branches of mathematics such as in the
+construction of periodic solutions to integrable non-linear partial differential
+equations and in the study of moduli spaces of algebraic curves and Jacobian
+varieties in algebraic geometry and number theory. Although these topics have
+been studied since Riemann himself it is only recently that the necessary tools
+have been developed to allow us to approach these problems from a computational
+perspective.
+
+In this dissertation I develop the software infrastructure and improve upon
+existing algorithms in order to provide a general-purpose computational
+framework for working with Riemann surfaces given by the desingularization and
+compactification of complex plane algebraic curves. These symbolic-numerical
+algorithms are implemented in Abelfunctions [1], a Sage open-source mathematics
+software library [2]. Specifically, I have provided an easy to use
+object-oriented interface for computing the period matrix of a Riemann surface
+and subsequently constructing of its Jacobian, performing arithmetic within
+divisor group including the calculation of valuation divisors of meromorphic
+differentials, numerically evaluating the Abel map and Riemann constant vector,
+and quickly and accurately evaluating the Riemann theta function: a special
+function from which Abelian functions are created.
+
+The tools provided in Abelfunctions are applied to solving two problems. First,
+I compute finite genus solutions to the Kadomtsev-Petviashvili equation: a
+nonlinear 2+1-dimensional partial differential equation describing the
+propagation of 2D shallow water waves. Second, I compute determinantal
+representations of smooth plane curves: complex matrices $A$, $B$, and $C$ such
+that $f(x,y) = \det(Ax + By + C)$.
+
+\vfill
+
+\tiny
+
+\noindent [1] C. Swierczewski {\it et al.}, {\it Abelfunctions: A library for
+  computing with Abelian functions, Riemann surfaces, and algebraic curves},
+2016 {\tt http://github.com/abelfunctions/abelfunctions}. \\
+
+\noindent [2] W. A. Stein {\it et al.}, {\it Sage Mathematics Software (Version
+  7.1)}, The Sage Development Team, 2016, {\tt http://www.sagemath.org}.
+
+\end{document}
