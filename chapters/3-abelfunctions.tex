@@ -17,15 +17,100 @@ encountered as well as allowing the ability to improve upon the software when
 new algorithms are developed, Abelfunctions was created using a completely
 open-source model within completely open-source software.
 
-This software can be obtained on Github at
+Abelfunctions differs from Algcurves in two main ways. First, the opportunity
+write a new a software package for computing with Riemann surfaces invites the
+opportunity to investigate better software design. The philosophy of design is
+first influenced by the choice of the Python/Sage language which offers features
+not availble in Maple. Furthermore, the use of object-oriented design offers the
+ability to more easily improve upon Abelfunctions in the future. Following these
+well-studied object-oriented design patterns \cite{gamma1995design} is in line
+with the reproducibility movement spreading in the computational sciences
+\cite{stodden2012reproducible} which encourages the release of well-designed and
+well-documented code used in any scientific endeavor which makes use of
+computational results.
+
+Second, the opportunity to implement the functionality of Algcurves in a
+different environment provided the opportunity to improve upon existing
+algorithms. The path from plane algebraic curve to period matrix, Abel map, and
+Riemann constant vector draws from a diverse set of algorithms used to realize
+the intermediate steps leading to these goals.
+
+This software can be obtained on GitHub at
 \url{http://github.com/abelfunctions}. Developers are encouraged to examine
 Appendix [XXX] where a description of the implementation details of version
 [XXX] are provided; the most recent version of the software at the time of this
 writing.
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{A Tour of
-  Abelfunctions}\label{sec:abelfunctions-a-tour-of-abelfunctions}
+\section{Reproducibility and Scientific Software Design}\label{sec:reproducibility}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Reproducibility is standard practice in the physical sciences. When sharing
+research with the scientific community one should provide sufficient detail of
+the experimental setup, performance metrics, and observations for a second party
+to repeat the experiment. Whatever the state of reproducibility is in physical
+science some have observed that field of computational science is lagging
+behind. From the generation of figures to the demonstration of newly developed
+algorithms many papers display these results without providing the means of
+generating these data: the source code.
+
+During the development of WaveLab, Buckheit and Donoho created the following
+slogan,
+\begin{quotation}
+  An article about computational science in a scientifc publication is not the
+  scholarship itself, it is merely advertising of the scholarship. The actual
+  scholarship is the complete software development environment and the complete
+  set of instructions which generated the figures \cite{buckheit1995wavelab}.
+\end{quotation}
+The [XXX][FINISH]
+
+To read more about the reproducibility movement in computational science see
+\cite{peng2011reproducible}, \cite{stodden2012reproducible}, and
+\cite{stodden2013best}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{A Brief Look at Object-Oriented Design}\label{sec:object-oriented-design}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Robert Martin succinctly addresses what goes wrong with software once it
+achieves non-trivial levels of complexity with a list of four symptoms of
+rotting design \cite{martin2000design}. The common element across these symptoms
+is that rotting design adds developer time and reduces manager and customer
+trust.
+\begin{itemize}
+\item {\bf Rigidity} - the tendency for software to be difficult to change. When
+  a simple fix should take several days but instead takes weeks, managers and
+  advisors are reluctant to let developers address non-critical issues.
+\item {\bf Fragility} - the tendency for software to break, potentially in many
+  places, every time it is changed. Fragile software creates connections between
+  parts of code that are supposed to be logically distinct.
+\item {\bf Immobility} - the inability to reuse software from parts of other
+  projects or the same project. The more extraneous components a software
+  component has the less potential it has to be generalized. [XXX] When
+  immobility is high the amount of work required to separate out potentially
+  resuable parts of code is greater than the work it takes to rewrite the code
+  entirely.
+\item {\bf Viscosity} - the situation where, when making a code change, the
+  approach that preserves the software design is more expensive than the
+  approach that does not. Viscous software encourages ``hacks'' as solutions to
+  problems rather than coherent modifications.
+\end{itemize}
+
+\subsection{Objects in Python and Sage}
+
+\subsection{Inheritance}
+
+\subsection{Composition}
+
+\subsection{Strategy Design Pattern}
+
+\subsection{Dependency Inversion}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{A Tour of Abelfunctions}\label{sec:abelfunctions-a-tour-of-abelfunctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{quote}
