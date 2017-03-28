@@ -10,9 +10,9 @@ to use framework for computing with Abelian functions, Riemann surfaces, and
 algebraic curves.
 
 Abelfunctions was inspired by the Maple software package Algcurves developed by
-Deconinck, van Hoeij, and Patterson \cite{algcurves}. The need for Abelfunctions
-grew out of the difficulty in keeping Algcurves up to date within Maple's
-proprietary software. Because of the need to resolve issues as they are
+Deconinck, van Hoeij, and Patterson \cite{DeconinckPatterson11}. The need for
+Abelfunctions grew out of the difficulty in keeping Algcurves up to date within
+Maple's proprietary software. Because of the need to resolve issues as they are
 encountered as well as allowing the ability to improve upon the software when
 new algorithms are developed, Abelfunctions was created using a completely
 open-source model within completely open-source software.
@@ -35,11 +35,19 @@ algorithms. The path from plane algebraic curve to period matrix, Abel map, and
 Riemann constant vector draws from a diverse set of algorithms used to realize
 the intermediate steps leading to these goals.
 
-This software can be obtained on GitHub at
-\url{http://github.com/abelfunctions}. Developers are encouraged to examine
-Appendix [XXX] where a description of the implementation details of version
-[XXX] are provided; the most recent version of the software at the time of this
-writing.
+In this chapter we will take a closer look at the software design and algorithm
+implementation details of the package. In Section \ref{sec:reproducibility} we
+begin with a discussion on reproducible research and its motivating role in the
+creation of Abelfunctions. In Section \ref{sec:object-oriented-design} we give a
+short introduction to object-oriented design and highlight the key patterns
+used. Section \ref{sec:abelfunctions-a-tour-of-abelfunctions} is the
+``developer's guide'' where we explore the design and organization of
+Abelfunctions. Finally, in Section
+\ref{sec:abelfunctions-improvements-on-algorithms} we highlight the algorithmic
+improvements made on previous work in the field.
+
+The Abelfunctions source code can be found on GitHub at
+\url{http://github.com/abelfunctions}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -74,11 +82,17 @@ To read more about the reproducibility movement in computational science see
 \section{A Brief Look at Object-Oriented Design}\label{sec:object-oriented-design}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+This section provides an introduction to object-oriented programming and design
+for computational scientists. In particular, we will see examples where these
+design patterns are used to produce reusable scientific software. It is
+suggested that readers of this section have some programming experience,
+preferrably in Python or Sage. % TODO - say something about scope, no OOP
+                               % experience
+
 Robert Martin succinctly addresses what goes wrong with software once it
-achieves non-trivial levels of complexity with a list of four symptoms of
-rotting design \cite{martin2000design}. The common element across these symptoms
-is that rotting design adds developer time and reduces manager and customer
-trust.
+achieves non-trivial levels of complexity in a list of four symptoms of rotting
+design \cite{martin2000design}. The common element across these symptoms is that
+rotting design adds developer time and reduces manager and customer trust.
 \begin{itemize}
 \item {\bf Rigidity} - the tendency for software to be difficult to change. When
   a simple fix should take several days but instead takes weeks, managers and
@@ -88,19 +102,87 @@ trust.
   parts of code that are supposed to be logically distinct.
 \item {\bf Immobility} - the inability to reuse software from parts of other
   projects or the same project. The more extraneous components a software
-  component has the less potential it has to be generalized. [XXX] When
+  component has the less potential it has to be generalized.  When 
   immobility is high the amount of work required to separate out potentially
   resuable parts of code is greater than the work it takes to rewrite the code
-  entirely.
+  entirely. % TODO - clean up / finish this blurb
 \item {\bf Viscosity} - the situation where, when making a code change, the
   approach that preserves the software design is more expensive than the
   approach that does not. Viscous software encourages ``hacks'' as solutions to
   problems rather than coherent modifications.
 \end{itemize}
 
+Object-oriented languages, such as Python and Sage, provide the ability to form
+abstractions of data and functionality for the purposes of reusability and
+modularity. % TODO - finish
+
+Design patterns are methodologies for writing object-oriented that attempt to
+avoid rotting design. An overview of these methodologies are beyond the scope of
+this text. The curous reader is encouraged to read \cite{gamma1995design} for an
+encyclopedia of design patterns for many common design situations, and
+\cite{martin2000design} for a list of general strategies to avoid introducing
+rot into your system.
+
 \subsection{Objects in Python and Sage}
 
 \subsection{Inheritance}
+
+The most basic of
+
+\begin{lstlisting}
+class NumericalIntegrator(object):
+    def weights(self, n):
+        raise NotImplementedError()
+
+    def integrate(self, func):
+        w = self.weights()
+        return sum(w[i]*func(x[i]) for i in range(n))
+\end{lstlisting}
+
+
+\begin{lstlisting}
+class NewtonCotesQuadrature(NumericalIntegrator):
+    def weights(self, n):
+        # compute the newton coates quadrature weights, w
+        return integral
+
+class GaussianQuadrature(NumericalIntegrator):
+    def weights(self, n):
+        # compute the gaussian quadrature weights, w
+        return w
+
+class ClenshawCurtisQuadrature(NumericalIntegrator):
+    def weights(self, n):
+        # compute the clenshaw curtis quadrature weights, w
+        return w
+         
+\end{lstlisting}
+
+
+Such a system is easily extendible: if a user or developer devises a new
+numerical integration technique they need only to create a new subclass of {\tt
+  NumericalQuadrature} and pass instances of that subclass to the appropriate
+functions. This design avoids the four rotting design symptoms:
+\begin{itemize}
+\item {\bf Rigidity} - adding a new integrator does not require changing code in
+  multiple locations.
+\item {\bf Fragility} - although this example is relatively simple, as long as
+  the new integrator adheres to the data contract of {\tt
+    NumericalQuadrature.integrate()} it will not break the software.
+  Furthermore, the design makes it easy to test the new integrator directly.
+\item {\bf Immobility} - the integration logic is separated from its uses in
+  other parts of the code. 
+\item {\bf Viscosity} - separating the integration logic from the rest of the
+  code allows the developer to isolate and better control the interface to these
+  components. {\tt NumericalQuadrature} makes it clear how functions are
+  integrated.
+\end{itemize}
+
+% TODO - mention design contract below...explain?
+% TODO - really messy train of thought. clean up
+
+
+      
 
 \subsection{Composition}
 
@@ -119,6 +201,64 @@ trust.
   \url{https://github.com/cswiercz/thesis} in the {\tt code} directory as a
   Jupyter notebook.
 \end{quote}
+
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+  \tikzstyle{element}=[rectangle, rounded corners, thick, draw]
+  \tikzstyle{leadsto}=[->, shorten >=5pt, shorten <=5pt, >=latex, thick]
+
+  % period matrix
+  \node[element] (periodmatrix) {Period Matrix};
+
+  % dummy element to the left of period matrix
+  \node[left=of periodmatrix, xshift=-1cm] (dummy) {};
+
+  % = algebraic side =
+  \node[element, above=of dummy] (oneforms) {1-Forms}
+      edge [leadsto] (periodmatrix);
+  \node[left=of oneforms, xshift=-0.5cm] (algdummy) {}; % alg dummy
+  \node[element, above=of algdummy] (intbasis) {Integral Basis}
+      edge [leadsto] (oneforms);
+  \node[element, below=of algdummy] (singularities) {Singularities}
+      edge [leadsto] (oneforms);
+  \node[element, left=of algdummy,xshift=-0.2cm] (puiseux) {Puiseux Series}
+      edge [leadsto] (singularities)
+      edge [leadsto] (intbasis);
+
+  %% \draw [->] (puiseux.east) -- (intbasis.west);
+  %% \draw [->] (puiseux.east) -- (singularities.west);
+  %% \draw [->] (intbasis.east) -- (oneforms.west);
+  %% \draw [->] (singularities.east) -- (oneforms.west);
+  %% \draw [->] (oneforms.east) -- (periodmatrix.west);
+
+  % = geometric side =
+  \node[element, below=of dummy] (homology) {Homology}
+      edge [leadsto] (periodmatrix);
+  \node[element, left=of homology] (monodromy) {Monodromy}
+      edge [leadsto] (homology);
+  \node[element, left=of monodromy, text width=2.1cm, align=center] (ancont) {Analytic Continuation}
+      edge [leadsto] (monodromy);
+
+  %% \draw [->] (ancont.east) -- (monodromy.west);
+  %% \draw [->] (monodromy.east) -- (homology.west);
+  %% \draw [->] (homology.east) -- (periodmatrix.west);
+\end{tikzpicture}
+\caption{The major computations performed by {\tt abelfunctions} and
+  their dependencies on one another.}
+\label{fig: dependencies}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
 
 Abelfunctions several top-level functions and objects. The user takes advantage
 of the Abelfunctions functionality primarily through these objects.
