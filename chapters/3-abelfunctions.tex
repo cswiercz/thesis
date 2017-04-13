@@ -195,71 +195,6 @@ functions. This design avoids the four rotting design symptoms:
 \section{A Tour of Abelfunctions}\label{sec:abelfunctions-a-tour-of-abelfunctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{quote}
-  In this section we demonstrate the various capabilities of the Abelfunctions
-  library. The full source code of this demonstration can be found at
-  \url{https://github.com/cswiercz/thesis} in the {\tt code} directory as a
-  Jupyter notebook.
-\end{quote}
-
-
-\begin{figure}
-\centering
-\begin{tikzpicture}
-  \tikzstyle{element}=[rectangle, rounded corners, thick, draw]
-  \tikzstyle{leadsto}=[->, shorten >=5pt, shorten <=5pt, >=latex, thick]
-
-  % period matrix
-  \node[element] (periodmatrix) {Period Matrix};
-
-  % dummy element to the left of period matrix
-  \node[left=of periodmatrix, xshift=-1cm] (dummy) {};
-
-  % = algebraic side =
-  \node[element, above=of dummy] (oneforms) {1-Forms}
-      edge [leadsto] (periodmatrix);
-  \node[left=of oneforms, xshift=-0.5cm] (algdummy) {}; % alg dummy
-  \node[element, above=of algdummy] (intbasis) {Integral Basis}
-      edge [leadsto] (oneforms);
-  \node[element, below=of algdummy] (singularities) {Singularities}
-      edge [leadsto] (oneforms);
-  \node[element, left=of algdummy,xshift=-0.2cm] (puiseux) {Puiseux Series}
-      edge [leadsto] (singularities)
-      edge [leadsto] (intbasis);
-
-  %% \draw [->] (puiseux.east) -- (intbasis.west);
-  %% \draw [->] (puiseux.east) -- (singularities.west);
-  %% \draw [->] (intbasis.east) -- (oneforms.west);
-  %% \draw [->] (singularities.east) -- (oneforms.west);
-  %% \draw [->] (oneforms.east) -- (periodmatrix.west);
-
-  % = geometric side =
-  \node[element, below=of dummy] (homology) {Homology}
-      edge [leadsto] (periodmatrix);
-  \node[element, left=of homology] (monodromy) {Monodromy}
-      edge [leadsto] (homology);
-  \node[element, left=of monodromy, text width=2.1cm, align=center] (ancont) {Analytic Continuation}
-      edge [leadsto] (monodromy);
-
-  %% \draw [->] (ancont.east) -- (monodromy.west);
-  %% \draw [->] (monodromy.east) -- (homology.west);
-  %% \draw [->] (homology.east) -- (periodmatrix.west);
-\end{tikzpicture}
-\caption{The major computations performed by {\tt abelfunctions} and
-  their dependencies on one another.}
-\label{fig: dependencies}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
 Abelfunctions several top-level functions and objects. The user takes advantage
 of the Abelfunctions functionality primarily through these objects.
 \begin{itemize}
@@ -312,25 +247,6 @@ sage: g
 %------------------------------------------------------------------------------
 \subsection{Places and Divisors}
 % ------------------------------------------------------------------------------
-
-The curve $C$ has the branch points,
-
-\begin{lstlisting}[language=Sage]
-sage: b = X.branch_points; b
-[-1*I, -1, 0, 1, 1*I, +Infinity]
-\end{lstlisting}
-
-\noindent This implies that at least one of the places above each of these
-points is ramified. In fact, in this example each branch point has a
-fully-ramified place lying above it on the Riemann surface.
-
-\begin{lstlisting}[language=Sage]
-sage: places = X(0)
-sage: for P in places: print P
-(-t^3, -t^-2 + O(t^0))
-sage: P.puiseux_series.extend(16); P
-(-t^3, -t^-2 + 1/3*t^10 + 1/9*t^22 + O(t^31))
-\end{lstlisting}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
