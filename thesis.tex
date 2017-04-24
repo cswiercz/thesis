@@ -8,10 +8,10 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{algorithm}
+\usepackage[section]{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning,decorations,decorations.markings}
+\usetikzlibrary{shapes,matrix,arrows,decorations,decorations.markings,tikzmark,fit,shapes.geometric,decorations.pathmorphing,backgrounds,positioning}
 
 \usepackage{url}
 \usepackage{hyperref}
@@ -41,13 +41,13 @@ sensitive=true}
 \usepackage{enumitem}
 \setlist[1]{itemsep=-5pt}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{definition}[theorem]{Definition}
+\newtheorem{theorem}[algorithm]{Theorem}
+\newtheorem{proposition}[algorithm]{Proposition}
+\newtheorem{lemma}[algorithm]{Lemma}
+\newtheorem{corollary}[algorithm]{Corollary}
+\newtheorem{definition}[algorithm]{Definition}
 \theoremstyle{definition}
-\newtheorem{example}[theorem]{Example}
+\newtheorem{example}[algorithm]{Example}
 
 \newcommand{\secondkind}[2]{\omega_{#1}^{(#2)}}
 \newcommand{\dd}{\,\mathrm{d}}

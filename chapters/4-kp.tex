@@ -3,33 +3,224 @@
   Equation}\label{ch:kp}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The Kadomtsev--Petviashvili equation
+The Kadomtsev--Petviashvili (KP) equation is a natural two-dimensional
+generalization of the Korteweg de-Vries (KdV) equation describing
+two-dimensional shallow water wave propagation.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}\label{sec:kp-introduction}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[descr/.style={fill=white}]
+    \matrix(m)[matrix of math nodes, row sep=6em, column sep=12em, text
+    height=1.5ex, text depth=0.25ex] {
+      u(x,y,0) & X,\DivD \\
+      u(x,y,t) & \boldsymbol{U},\boldsymbol{V},\boldsymbol{W},\boldsymbol{D}, \Omega \\
+    };
 
+    \path[->]
+      (m-1-1) edge node[auto] {Deconinck} (m-1-2)
+      (m-1-1) edge node[auto] {} (m-2-1)
+      (m-1-2) edge node[near start,right]
+                   {A) Krichever, Deconinck, van Hoeij}
+                   node[near end, right]
+                   {B) Frauendiener, Klein}
+                   (m-2-2)
+      (m-1-2) edge[dashed] node[descr] {Bobenko} (m-2-1)
+      (m-2-2) edge[bend left,dashed] node[auto]
+              {Dubrovin, Flickinger, Segur}
+              (m-2-1)
+      (m-2-2) edge node[auto] {Krichever} (m-2-1);
+  \end{tikzpicture}
+  \caption{A map of contributions to the solution to the initial value problem
+    for the KP equation. The path taken by this work is represented by the solid
+    arrows. Alternate approaches are shown as dashed arrows.}
+\end{figure}
+
+
+
+Other approaches exist for computing with Riemann surfaces. Bobenko and
+collaborators \cite{belokolos, BobenkoBordag89} compute solutions of integrable
+equations using a Schottky group representation for the associated surface. To
+our knowledge, the only paper dealing with all Riemann surfaces represented by
+algebraic curves is by Frauendiener, Klein, and Shramchenko who compute the
+homology of a Riemann surface from the monodromy of an underlying algebraic
+curve, following \cite{dvh1}. Otherwise, authors have restricted themselves to
+specific families of Riemann surfaces such as hyperelliptic ones
+\cite{FrauendienerKlein06,FrauendienerKlein15} or low genus ones
+\cite{DFS97,FinkelSegur85,DeconinckSwierczewski13}. Our aim throughout is the
+development of algorithms capable of dealing with arbitrary compact connected
+Riemann surfaces, as is required for the investigation of solutions of, for
+instance, the KP equation \cite{DS98,Shiota86}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Finite Genus Solutions}\label{sec:kp-finite-genus-solutions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Real Non-singular Solutions}
+There is a large class of so-called ``finite-genus'' solutions to the KP
+equation. These solutions are quasiperiodic -- functions $f$ such that $f(z + T)
+\approx f(z)$ for some quasiperiod $T$ and some meaning of ``approximate''. For
+example, a function satisfying $f(z + T) = Cf(z)$ is called geometric
+quasiperiodic. Similarly, a function satisfying $f(z + T) = f(z) + C$ is called
+arithmetic quasiperiodic. In fact, we have already seen an example of
+quasiperiodicity in the Riemann theta function $\theta(z,\Omega)$. The
+quasiperiod is $T = m + \Omega n$ for $m,n in \ZZ^g$ and the Riemann theta
+function satisfies the functional equation,
+\begin{equation}
+  \theta(z + m + \Omega n, \Omega)
+  =
+  e^{-2 \pi i \left( \tfrac{1}{2} n \cdot \Omega n + n \cdot z \right)}
+  \theta(z,\Omega).
+\end{equation}
 
-\begin{quote}
-  We introduce the concept of a real Riemann surface with symmetric homology
-  basis. These are necessary
-\end{quote}
+In order to define the class of finite-genus solutions to the KP equation we
+must first derive some components.
+
+Given a genus $g$ Riemann surface $X$ with normalized basis of holomorphic
+one-forms $\mathbf{\omega} = \{ \omega_1, \ldots, \omega_g\}$
 
 
-Although every Riemann surface can lead to a solution to the KP equation they
-are often complex and have singularities. For applications, such as water waves
-and plasma physics, it is important to identify the real and smooth solutions.
+\begin{theorem} \label{thm:finite-genus-solutions} The KP equation
+\begin{equation} \label{eqn:kp}
+  u = c + 2 \partial_x^2 \log \theta\Big( \boldsymbol{U}x +
+  \boldsymbol{V}y + \boldsymbol{W}t + \Abel\big(P^\infty,\DivD\big) -
+  \RCV(P^\infty), \Omega \Big),
+\end{equation}
+
+\end{theorem}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Symmetric Period Bases}\label{sec:kp-symmetric-period-bases}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO theorem from Belokolos
+
+The approach discussed above provides solutions to the KP equation but make no
+restrictions on smoothness. However, for general solutions of the form
+\begin{equation} \label{eqn:kp}
+  u = c + 2 \partial_x^2 \log \theta\Big(
+  \boldsymbol{U}x + \boldsymbol{V}y + \boldsymbol{W}t + \boldsymbol{D},
+  \Omega \Big),
+\end{equation}
+there are certain restrictions imposed on the Riemann surface itself as well as
+the choice of phase shift $\boldsymbol{D}$ in order to obtain solutions to the
+KP equation that are real and smooth. In this section we will describe a
+technique due to Kalla and Klein used to derive such a solution as well as the
+algorithmic design in Abelfunctions. Note that this approach makes no direct
+contribution to the solution to the initial value problem but is nonetheless an
+important perspective of the study of solutions to the KP equation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO FINISH
+We begin with a central theorem.
+\begin{theorem} \cite{belokolos1994algebro} For smoothness and reality of
+  solutions to the KP equation it is necessary and sufficient that, for a given
+  Riemann surface $X$, place at infinity $P_\infty$, and local parameter $p =
+  k^{-1}$ at $P_\infty$, that the following conditions are satisfied for the
+  vector $\boldsymbol{D}$:
+  \begin{itemize}
+  \item $X$ admits and antiholomorphic involution $\tau : X \to X, \tau^2 = 1,$
+    where $\tau P_\infty = P_\infty$ and $\tau^* k = \bar{k}$.
+  \item The set of all fixed ovals of the involution $\tau$ decomposes $X$ into
+    two connected components $X^+$ and $X^-$.
+  \item If $P_\infty \in $
+    
+  \end{itemize}
+
+\end{theorem}
+
+The algorithms discussed in Chapter \ref{ch:background} compute the period
+matrix of a Riemann surface using the canonical basis of of cycles determined by
+the Tretkoff and Tretkoff algorithm \cite{TretkoffTretkoff84}. However, these
+cycles may not be invariant under the antiholomorphic involution defined on a
+real plane algebraic curve.
+
+\begin{definition} \label{def:topological-type} The {\bf topological} type of a
+  real Riemann surface $X$ is given by the tuple $(g, k, a)$ where $g$ is the
+  genus of the surface, $k$ is the number of real ovals, and $a = 0$ if the
+  curve is dividing and $a = 1$ if the curve is non-dividing. The {\bf real
+    ovals} of a surface are the connected components of $X(\mathbb{R})$. $X$ is
+  called {\bf dividing} if and only if $X \setminus X(\mathbb{R})$ has two
+  connected components. Otherwise, it has one connected component and is called
+  {\bf non-dividing}.
+\end{definition}
+
+\begin{definition} \label{def:symmetric-homology-basis} Let $\tau$ be an
+  antiholomorphic involution on a real Riemann surface $X$. A canonical homology
+  basis $(\mathcal{A}, \mathcal{B})$ is called a {\bf symmetric homology basis}
+  if it satisfies,
+  \begin{equation}
+    \begin{pmatrix} \tau \mathcal{A} \\ \tau \mathcal{B} \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \mathbb{I}_g & 0 \\
+      \mathbb{H} & -\mathbb{I}_g
+    \end{pmatrix}
+    \begin{pmatrix} \mathcal{A} \\ \mathcal{B} \end{pmatrix},
+  \end{equation}
+  where $\mathbb{H}$ is a block diagonal matrix depending on the topological
+  type $(g, k, a)$ of $X$ and has one of the following forms:
+  \begin{align}
+    \mathbb{H} &= \begin{pmatrix}
+      0 & 1 &        &   &   &   &        &   \\
+      1 & 0 &        &   &   &   &        &   \\
+        &   & \ddots &   &   &   &        &   \\
+        &   &        & 0 & 1 &   &        &   \\
+        &   &        & 1 & 0 &   &        &   \\
+        &   &        &   &   & 0 &        &   \\
+        &   &        &   &   &   & \ddots &   \\
+        &   &        &   &   &   &        & 0
+      \end{pmatrix}, & \text{if $k>0$ and $a=0$}, \\
+    \mathbb{H} &= \begin{pmatrix}
+      \mathbb{I}_{g+1-k} & \\
+      & 0
+    \end{pmatrix},  & \text{if $k>0$ and $a=1$}, \\
+    \mathbb{H} &= \begin{pmatrix}
+      0 & 1 &        &   &   \\
+      1 & 0 &        &   &   \\
+        &   & \ddots &   &   \\
+        &   &        & 0 & 1 \\
+        &   &        & 1 & 0
+      \end{pmatrix}, & \text{if $k=0$ and $g$ is even}, \\
+    \mathbb{H} &= \begin{pmatrix}
+      0 & 1 &        &   &   &   \\
+      1 & 0 &        &   &   &   \\
+        &   & \ddots &   &   &   \\
+        &   &        & 0 & 1 &   \\
+        &   &        & 1 & 0 &   \\
+        &   &        &   &   & 0
+    \end{pmatrix}, & \text{if $k=0$ and $g$ is odd}.
+  \end{align}
+\end{definition}
+
+%%%%%%%%%% TODO DISCUSSION OF SYMPLECTIC TRANSFORMATIONS ON HOMOLOGY BASES
+%%%%%%%%%% cf. p30 of belokolos
+Recall that 
+
+The goal is to construct a symplectic transformation
+\begin{equation}
+  \Gamma = \begin{pmatrix} A & B \\ C & D \end{pmatrix}
+\end{equation}
+mapping an arbitrary canonical homology basis $(\tilde{\mathcal{A}},
+\tilde{\mathcal{B}})$ to an equivalent, in the sense of Siegel, symmetric
+homology basis $(\mathcal{A}, \mathcal{B})$ satisfying,
+\begin{equation}
+  \begin{pmatrix} \tau \mathcal{A} \\ \tau \mathcal{B} \end{pmatrix}
+  \begin{pmatrix}
+      \mathbb{I}_g & 0 \\
+      \mathbb{H} & -\mathbb{I}_g
+  \end{pmatrix}
+  \begin{pmatrix} \mathcal{A} \\ \mathcal{B} \end{pmatrix},
+\end{equation}
+and, therefore, the necessary and sufficient conditions to produce real and
+smooth solutions to the KP equation. Vinnikov proves \cite{vinnikov1993self}
+that such a symplectic transformation exists,
+\begin{equation}
+  \begin{pmatrix} A & B \\ C & D \end{pmatrix}
+  \begin{pmatrix} \tau{\mathcal{A}} \\ \tau{\mathcal{B}} \end{pmatrix} = 
+  \begin{pmatrix} \mathcal{A} \\ \mathcal{B} \end{pmatrix}.
+\end{equation}
+
+We summarize the work of Kalla and Klein
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Computations and Results}\label{sec:kp-computations-and-results}

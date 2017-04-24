@@ -491,7 +491,7 @@ $t$. This will be discussed in more detail in the following section.
       edge [leadsto] (periodmatrix);
   \node[element, left=of homology] (monodromy) {Monodromy}
       edge [leadsto] (homology);
-  \node[element, left=of monodromy, text width=2.1cm, align=center] (ancont) {Analytic Continuation}
+  \node[element, left=of monodromy, text width=2.5cm, align=center] (ancont) {Analytic Continuation}
       edge [leadsto] (monodromy);
 
   %% \draw [->] (ancont.east) -- (monodromy.west);
@@ -1866,10 +1866,194 @@ print eigvals(Omega.imag)
 \subsection{The Abel Map}\label{subsec:background-the-abel-map}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{definition}\label{def:abelmap}
+  Let $P \in X$ be a fixed place. The Abel Map $\boldsymbol{A} : X \to
+  J(X)$ is defined by
+  \begin{equation} \label{eqn:abel1}
+    \boldsymbol{A}(P,Q) = \big( A_1(P,Q), \ldots, A_g(P,Q) \big),
+  \end{equation}
+  where
+  \begin{equation} \label{eqn:abel2}
+    A_j(P,Q) = \int_P^Q \omega_j,
+  \end{equation}
+  and the path chosen from $P$ to $Q$ is the same for each $A_j$. The
+  Abel map is written in vector form as
+  \begin{equation} \label{eqn:abel-vector}
+    \boldsymbol{A}(P,Q) = \int_P^Q \boldsymbol{\omega}.
+  \end{equation}
+\end{definition}
+The definition of the Abel map can be extended to divisors: let $\DivD =
+\sum_i n_i P_i$. We define
+\begin{equation} \label{eqn:abel-divisors}
+  \boldsymbol{A}(P,\DivD) = \sum_i n_i \boldsymbol{A}(P,P_i).
+\end{equation}
+The Abel Map is independent of the path $\gamma$ from $P$ to $Q$ chosen
+on $X$ for if $\gamma$ and $\eta$ are two such paths then their
+difference is a linear combination of homology basis cycles. The
+integral of $\boldsymbol{\omega}$ along this closed path is a lattice
+element and therefore is congruent to zero in $J(X)$.
+
+An algorithm for computing the Abel map is described in
+\cite{DeconinckPatterson11}. The implementation in {\sc abelfunctions}
+is based on this algorithm.
+
+\begin{example}
+{\sc abelfunctions} selects a regular ``base place'' $P_0$ from which to
+construct all paths on $X$. When given a single argument {\tt AbelMap()}
+returns $\Abel(P_0,P)$.
+\begin{lstlisting}
+sage: J = Jacobian(X)       # reduces vectors modulo lattice ZZ^g + Omega ZZ^g
+sage: z1 = AbelMap(P); z1   # Abel map from P0 to P
+[-0.5261+0.0864j  0.0669+0.6392j -0.7495+1.1037j -1.5030+1.0356j]
+sage: z2 = AbelMap(Q); z2   # Abel map from P0 to Q
+[-0.3875+0.1157j -0.0290+0.4437j -0.4532+0.7774j -0.9721+0.6732j]
+sage: z3 = AbelMap(P,Q); z3 # Abel map from P to Q
+[ 0.1468-0.0985j  0.8467+0.6989j  0.0996+1.0083j -1.1003+0.8159j]
+sage: numpy.linalg.norm( J((z2-z1) - z3) ) # numerically verify that A(P,Q) = A(P0,Q) - A(P0,P)
+3.80631643473e-16
+\end{lstlisting}
+The Abel map accepts divisors as well.
+\begin{lstlisting}
+sage: w = AbelMap(D); w
+[ 0.0670-0.1361j  0.9421+0.7429j -0.4887+0.7663j -1.5057+0.6992j]
+sage: z = J(3*z1 + z2) # verify that w = 3*z1 + z2 mod period lattice
+sage: numpy.linalg.norm(w-z)
+1.57107346e-15
+\end{lstlisting}
+\end{example}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Riemann Constant
   Vector}\label{subsec:background-the-riemann-constant-vector}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition} \label{def:rcv}
+Let $X$ be a genus $g$ Riemann surface with associated Riemann matrix
+$\Omega$. The Riemann constant vector $\RCV : X \to J(X)$ is defined as
+\begin{equation} \label{eqn:rcv1}
+  \RCV(P) = \big( K_1(P), \ldots, K_g(P) \big),
+\end{equation}
+where
+\begin{equation} \label{eqn:rcv2}
+  K_j(P) = \frac{1 + \Omega_{jj}}{2} - \sum_{k \neq j}^g
+           \oint_{a_k} \omega_k(Q) A_j(P,Q).
+\end{equation}
+\end{definition}
+Once we know the value of $\RCV(P_0)$ the value of $\RCV(P)$ is
+determined using only a shift by the Abel map:
+\begin{theorem} \label{thm:RCVshift}
+  Let $P_0,P$ be places on a genus $g$ Riemann surface $X$. Then
+  \begin{equation} \label{eqn:RCVshift}
+    \RCV(P) = \RCV(P_0) + (g-1)\Abel(P_0,P).
+  \end{equation}
+\end{theorem}
+\begin{proof}
+Let $Q$ be an arbitrary place on $X$. By the definition of the Abel map,
+$\Abel(P,Q) = \Abel(P,P_0) + \Abel(P_0,Q)$. Using this identity in the
+definition of the RCV we obtain
+\begin{align} \label{eqn:RCVshift1}
+  K_j(P)
+  &=
+  \frac{1 + \Omega_{jj}}{2}
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) A_j(P,Q) \dQ  \notag \\
+  &=
+  \frac{1 + \Omega_{jj}}{2}
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) \Big( A_j(P,P_0) + A_j(P_0,Q) \Big) \dQ  \notag \\
+  &=
+  \frac{1 + \Omega_{jj}}{2}
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) A_j(P,P_0) \dQ
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) A_j(P_0,Q) \dQ.
+\end{align}
+The $j$th-component of the Abel map appearing in the first sum has no
+dependence on the variable of integration $Q$ nor on the summation index
+$k$. Therefore,
+\begin{align} \label{eqn:RCVshift2}
+  K_j(P)
+  &=
+  \frac{1 + \Omega_{jj}}{2}
+  -
+  A_j(P,P_0)
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) \dQ
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) A_j(P_0,Q) \dQ \notag \\
+  &=
+  \frac{1 + \Omega_{jj}}{2}
+  -
+  A_j(P,P_0) (g-1)
+  -
+  \sum_{k \neq j}^g
+  \oint_{a_k} \omega_k(Q) A_j(P_0,Q) \dQ \notag \\
+  &=
+  K_j(P_0) + (g-1)A_j(P_0,P).
+\end{align}
+\end{proof}
+The primary computational benefit to using the result of Theorem
+\ref{thm:RCVshift} is that most of the work in evaluating $\RCV$ comes
+from evaluating it at a fixed place $P_0$. Once this is done, we only
+need the Abel map to determine $\RCV$ for all other places $P \in X$. In
+{\sc abelfunctions} a fixed place of the Riemann surface is
+automatically chosen.
+
+The inspiration behind the algorithm for computing the RCV described in
+the following section comes from the following two theorems. Theorem
+\ref{thm:rcvequiv} characterizes a certain class of divisors in terms of
+the RCV, a proof of which is found in \cite{FarkasKra92}.
+\begin{theorem} \label{thm:rcvequiv}
+  Let $\DivC$ be a divisor on a genus $g$ Riemann surface $X$ of degree
+  $2g - 2$. Then $\DivC$ is a canonical divisor if and only if
+  \begin{equation} \label{eqn:rcvequiv}
+    2\RCV(P) \equiv -\Abel(P,\DivC).
+  \end{equation}
+\end{theorem}
+\noindent Theorem \ref{thm:thetadivisor} establishes a connection
+between the Riemann theta function and the RCV, a proof of which is also
+found in \cite{FarkasKra92}.
+\begin{definition} \label{def:riemanntheta}
+  The Riemann theta function $\theta: J(X) \times \hg \to \CC$ is
+  defined by
+  \begin{equation} \label{eqn:riemanntheta}
+    \theta(z,\Omega)
+    =
+    \sum_{n \in \ZZ^g}
+    e^{2 \pi i \left( \tfrac{1}{2} n \cdot \Omega n + n \cdot z \right)}.
+  \end{equation}
+  This series converges absolutely and uniformly on compact sets in
+  $J(X) \times \hg$ where $\hg$ is the space of all Riemann matrices.
+\end{definition}
+
+\begin{theorem} \label{thm:thetadivisor}
+  Let $\Omega$ be the Riemann matrix associated with the Riemann surface
+  $X$ and $P_0 \in X$ an arbitrary place. Then a vector $\boldsymbol{W}
+  \in J(X)$ satisfies
+  \begin{equation} \label{eqn:thetadivisor1}
+    \theta(\boldsymbol{W}, \Omega) = 0,
+  \end{equation}
+  if and only if there exists a divisor $\DivD = P_1 + \cdots P_{g-1}$
+  such that
+  \begin{equation} \label{eqn:thetadivisor2}
+    \boldsymbol{W} = \boldsymbol{A}(P_0, \DivD) + \boldsymbol{K}(P_0).
+  \end{equation}
+\end{theorem}
+Note that $\DivD$ may contain a place of multiplicity greater than
+one. The primary requirement of $\DivD$ is that it is of degree $g-1$
+and is effective. The set $\Theta := \{ \boldsymbol{W} \in J(X) :
+\theta(\boldsymbol{W},\Omega) = 0\}$ is known as the {\it theta divisor}
+of the Riemann surface $X$. It is a $(g-1)$ complex--dimensional
+subvariety of $J(X)$. Theorem \ref{thm:thetadivisor} states that $\Theta
+= \Abel\left(P_0,SX^{g-1}\right) + \boldsymbol{K}(P_0)$ where $SX^{g-1}$
+is the $(g-1)$--fold symmetric product of the Riemann surface.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Riemann Theta

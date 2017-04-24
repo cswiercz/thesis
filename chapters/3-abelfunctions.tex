@@ -82,12 +82,16 @@ To read more about the reproducibility movement in computational science see
 \section{A Brief Look at Object-Oriented Design}\label{sec:object-oriented-design}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This section provides an introduction to object-oriented programming and design
-for computational scientists. In particular, we will see examples where these
-design patterns are used to produce reusable scientific software. It is
-suggested that readers of this section have some programming experience,
-preferrably in Python or Sage. % TODO - say something about scope, no OOP
-                               % experience
+Many applied mathematician write code but do not necessarily write
+object-oriented code. Sometimes this is a restriction imposed by the language of
+choice. For example, Lisp and Scala, programming languages popular in the
+artificial intelligence communities, are not object-oriented languages. Other
+times, it is due to an unawareness of its existence or utility. This section
+provides an introduction to object-oriented programming and design for
+computational scientists and why it is useful in scientific code. In particular,
+we will see examples where this software design tool is used to produce reusable
+scientific software and avoid rotting design. It is suggested that readers of
+this section have some programming experience, preferrably in Python or Sage.
 
 Robert Martin succinctly addresses what goes wrong with software once it
 achieves non-trivial levels of complexity in a list of four symptoms of rotting
@@ -105,7 +109,7 @@ rotting design adds developer time and reduces manager and customer trust.
   component has the less potential it has to be generalized.  When 
   immobility is high the amount of work required to separate out potentially
   resuable parts of code is greater than the work it takes to rewrite the code
-  entirely. % TODO - clean up / finish this blurb
+  entirely.
 \item {\bf Viscosity} - the situation where, when making a code change, the
   approach that preserves the software design is more expensive than the
   approach that does not. Viscous software encourages ``hacks'' as solutions to
@@ -114,46 +118,96 @@ rotting design adds developer time and reduces manager and customer trust.
 
 Object-oriented languages, such as Python and Sage, provide the ability to form
 abstractions of data and functionality for the purposes of reusability and
-modularity. % TODO - finish
+modularity. When used correctly one avoids rotting design traps. The main
+concepts of object-oriented programming are objects, classes, inheritance, and
+polymorphism.
 
-Design patterns are methodologies for writing object-oriented that attempt to
-avoid rotting design. An overview of these methodologies are beyond the scope of
-this text. The curous reader is encouraged to read \cite{gamma1995design} for an
-encyclopedia of design patterns for many common design situations, and
+Design patterns are methodologies for writing object-oriented code so as to
+avoid rotting design. A complete overview of design patterns is beyond the scope
+of this text. The curious reader is encouraged to read \cite{gamma1995design}
+for an encyclopedia of design patterns for many common design situations and
 \cite{martin2000design} for a list of general strategies to avoid introducing
 rot into your system.
 
-\subsection{Objects in Python and Sage}
+
+
+\subsection{Objects and Classes}
+
+Objects are the basic entities in an object oriented system. They represent the
+combination of data and operations acting on these data. When a program is
+executed objects interact with each other by sending messages. Objects have two
+components: state and behavior. The state of an object is any data that it may
+encapsulate and the behavior consists of functions, often called methods, that
+use the state to communicate information to the user and to other objects.
+
+Objects are instances of classes which define the state format and available
+behaviors. For example, a \verb=Person= class may consist of two data fields,
+\verb=name:string= and \verb=age:int=, and a method \verb=speak()= which returns
+the string \verb='My name is <name> and I am <age> years old.'=. A class diagram
+[XXX] can be used to graphically represent this class.
+
+% TODO: insert class diagram
+
+Two objects, \verb=Alice= and \verb=Bob=, are instances of the \verb=Person=
+class with the \verb=name= field defined as \verb='Alice'= and \verb='Bob'=,
+repectively, and given definitions for \verb=age= as well. Note that the
+\verb=speak()= method does not differ between the two objects. Instead, it uses
+the data defined by the objects to return the appropriate string message.
+
+We will use a more interesting running example of building an numerical
+integrator package. The implementation details will be omitted we instead
+focuson the software structure.
+
+
+
+\begin{lstlisting}
+\end{lstlisting}
+
 
 \subsection{Inheritance}
 
 The most basic of
 
+One class of numerical integrators are of the form
+\[
+  \int_{-1}^1 f(x) dx \approx \sum_{i=0}^n w_i f(x_i)
+\]
+where the weights $w_i$ and evaluation locations $x_i$ are chosen based on the
+technique used. For example,
+\begin{itemize}
+\item {\bf Degree $2$ Newton-Cotes (Trapezoid Rule)} - $w_i = 1$ if $i=0$ or
+  $i=n$ and $w_i = 2$ otherwise, and $x_i = -1 + 2i/n$.
+  \item {\bf Gaussian Quadrature} - $w_i = 1/\sqrt{1-x_i^2}$
+\end{itemize}
+
 \begin{lstlisting}
 class NumericalIntegrator(object):
-    def weights(self, n):
+    def __init__(self, n):
+        self.n = n
+
+    def weights_and_locations(self):
         raise NotImplementedError()
 
     def integrate(self, func):
-        w = self.weights()
+        w, x = self.weights_and_locations()
         return sum(w[i]*func(x[i]) for i in range(n))
 \end{lstlisting}
 
 
 \begin{lstlisting}
 class NewtonCotesQuadrature(NumericalIntegrator):
-    def weights(self, n):
-        # compute the newton coates quadrature weights, w
-        return integral
+    def weights(self):
+        # return the newton coates quadrature weights, w
+        return w
 
 class GaussianQuadrature(NumericalIntegrator):
-    def weights(self, n):
-        # compute the gaussian quadrature weights, w
+    def weights(self):
+        # return the gaussian quadrature weights, w
         return w
 
 class ClenshawCurtisQuadrature(NumericalIntegrator):
-    def weights(self, n):
-        # compute the clenshaw curtis quadrature weights, w
+    def weights(self):
+        # return the clenshaw curtis quadrature weights, w
         return w
          
 \end{lstlisting}
@@ -267,9 +321,622 @@ sage: g
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Computing on the Period
+  Lattice}\label{subsec:abelfunctions-period-lattice}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Abel Map}\label{subsec:abelfunctions-abel-map}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Riemann Constant
   Vector}\label{subsec:abelfunctions-riemann-constant-vector}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section we present an algorithm for computing the Riemann constant
+vector as well as a demonstration of its implementation in {\sc abelfunctions}.
+First we present an overview of and the motivation behind the algorithm. We
+describe the two primary components of the algorithm later in this section.
+
+Theorem \ref{thm:rcvequiv} suggests an approach to computing the RCV provided we
+can compute a canonical divisor of the Riemann surface. However, even with such
+a divisor the theorem only makes a statement about the value of $2\RCV(P_0)$.
+That is, one would like to say
+\begin{equation}
+  \RCV(P_0) \equiv - \tfrac{1}{2} \Abel(P_0,\DivC),
+\end{equation}
+but division is not unique in this equivalence class. In general, there are
+$2^{2g}$ {\it half-lattice vectors} $\boldsymbol{h} \in \tfrac{1}{2}\Lambda$
+such that $\RCV(P_0) \equiv \boldsymbol{h} - \tfrac{1}{2}\Abel(P_0,\DivC)$.
+Therefore, a second objective is to find an appropriate half-lattice vector.
+
+\begin{algorithm}[H]
+\caption{\tt riemann\_constant\_vector}
+\label{alg:rcv}
+\begin{algorithmic}[1]
+  \Require Riemann surface $X$ given by the desingularization and
+  compactification of complex plane algebraic curve $C : f(x,y) = 0$
+
+  \Require place $P \in X$
+
+  \Ensure Riemann constant vector $\RCV(P)$
+
+  \State compute the Riemann matrix $\Omega$
+
+  \State $\DivC \gets$ \verb=canonical_divisor()=
+  \Comment{Algorithm \ref{alg:canonical}}
+
+  \State $\boldsymbol{h} \gets$ \verb=half_lattice_vector()=
+  \Comment{Algorithm \ref{alg:half-lattice-vector}}
+
+  \State $\RCV_0 \gets \boldsymbol{h} - \tfrac{1}{2}\Abel(P_0,\DivC)
+  \bmod{\Lambda}$
+
+  \State $\RCV \gets \RCV_0 + (g-1)\Abel(P_0,P)$
+
+  \State \Return $\RCV$
+\end{algorithmic}
+\end{algorithm}
+
+The rest of this section presents in detail the subroutines
+\verb=canonical_divisor= and \verb=half_lattice_vector= which provide the
+necessary remaining ingredients for the above algorithm.
+
+
+
+%------------------------------------------------------------------------------
+\subsubsection{Computing a Canonical Divisor}\label{sec:canonical}
+%------------------------------------------------------------------------------
+
+
+
+Determining the zeros and poles of a meromorphic one-form
+\begin{equation} \label{eqn:meromorphic-one-form}
+\nu = \frac{p(x,y)}{q(x,y)}\dx
+\end{equation}
+is not as straightforward as finding the roots of the polynomials $p$ and $q$.
+One challenge comes from analyzing the local behavior of $\dx$. Furthermore, it
+may occur that the numerator and denominator have the same order of vanishing at
+some place $P \in X$ in which case $P$ is neither a root nor pole of $\nu$.
+
+Let $P \in X$ be a place with Puiseux series representation $(x_P(t), y_P(t))$
+where $t$ is a local parameter as given in Definition \ref{def:puiseux}. A
+necessary condition for $P$ to be a root or pole of $\nu$ is that
+\begin{equation}
+  p\big(x_P(t), y_P(t)\big) \Big|_{t=0} \! = 0,
+  \qquad
+  q\big(x_P(t), y_P(t)\big) \Big|_{t=0} \! = 0,
+  \qquad \text{or} \qquad
+  \frac{\dx_P}{\dt}\big(0\big) = 0.
+\end{equation}
+In particular, to determine if $P \in (\nu)_\text{val}$ we substitute the
+Puiseux series representation into $\nu$ and expand as a Laurent series in $t$:
+\begin{align} \label{eqn:localization}
+\nu \Big|_P
+&=
+\frac{p\big(x_P(t),y_P(t)\big)}{q\big(x_P(t),y_P(t)\big)} \dx_P(t) \notag \\
+&=
+\frac{p(t)}{q(t)} x_P'(t) \dt \notag \\
+&=
+\Big( c t^{\text{val}(\nu,P)} + \cdots \Big) \dt,
+\end{align}
+where $\text{val}(\nu,P)$ is the leading order behavior of $\nu$ at $P$. This
+gives us a test for determining if $P$ is a member of the set of places
+appearing in $(\nu)_\text{val}$: if $\text{val}(\nu,P) < 0$ then $P$ is a pole,
+if $\text{val}(\nu,P) > 0$ then $P$ is a zero, otherwise $P$ does not appear in
+the valuation divisor of $\nu$. The multiplicity of the zero or pole is equal to
+$|\text{val}(\nu,P)|$.
+
+With the above membership test what remains is to construct a set of places
+$\mathcal{P}_\nu$ guaranteed to contain the places appearing in
+$(\nu)_\text{val}$. We obtain the valuation divisor by applying the membership
+test to each $P \in \mathcal{P}_\nu$. Consider the resultant $R(f,p)(x)$ of $f$
+and $p$ with respect to $y$. By definition, the roots of $R$ are the points
+$\alpha \in \CC$ such that
+\begin{equation}
+f(\alpha,y) = 0 \quad \text{and} \quad p(\alpha, y) = 0
+\end{equation}
+have simultaneous solutions. Therefore, for a place $P$ to be a zero of $p$ it
+must be the case that the $x$-projection of $P$, $x_P(0)$, is a root of the
+resultant $R$. Similarly, for $P$ to be a zero of $q$ its $x$-projection
+$x_P(0)$ must be a root of the resultant $R(f,q)(x)$. We also need to include
+the places $P$ which cause $\dx$ to vanish. This occurs when $(\dx_P/\dt)(0) =
+x'_P(0) = 0$. That is, when $P$ lies above a branch point of $f$.
+
+Define the sets
+\begin{align}
+  \mathcal{X}_\nu^{(1)}
+  &=
+  \left\{
+  \alpha \in \CC \; | \; R(f,p)(\alpha) = 0
+  \right\}, \notag \\
+  \mathcal{X}_\nu^{(2)}
+  &=
+  \left\{
+  \alpha \in \CC \; | \; R(f,q)(\alpha) = 0
+  \right\}, \notag \\
+  \text{and} \quad \mathcal{X}_\nu^{(3)}
+  &=
+  \left\{ \alpha \in \CC \; | \; \alpha \text{ is
+    a branch point of $f$} \right\}.
+\end{align}
+Since the representation of the one-form in \eqref{eqn:meromorphic-one-form}
+only captures its affine behavior it is necessary to examine its behavior at all
+places lying above $x=\infty$. Define
+\begin{equation}
+\mathcal{X}_\nu
+=
+\mathcal{X}_\nu^{(1)} \cup
+\mathcal{X}_\nu^{(2)} \cup
+\mathcal{X}_\nu^{(3)} \cup
+\{ \infty \}.
+\end{equation}
+This consists of all $x$-points above which there may be a place $P$ where $\nu$
+vanishes. That is, the only places we need to check are those with
+$x$-projections in $\mathcal{X}_\nu$. Therefore, the set
+\begin{equation}
+\mathcal{P}_\nu =
+\left\{ P \in X \; | \; x_P(0) \in \mathcal{X}_\nu
+\right\},
+\end{equation}
+is guaranteed to contain the places appearing in $(\nu)_\text{val}$. The Puiseux
+algorithm is well-designed to compute this set.
+
+This procedure is simplified when computing the valuation divisor of an Abelian
+differential of the first kind. Recall that every such differential is trivially
+a meromorphic one-form and therefore can be used to compute a canonical divisor.
+We could use one of the normalized basis elements $\{\omega_1, \ldots,
+\omega_g\}$ to obtain a canonical divisor on $X$ but it is preferred to use the
+non-normalized differentials $\{\tilde{\omega}_1, \ldots, \tilde{\omega}_g\}$
+returned by {\sc abelfunctions}. This is done for several performance-related
+reasons:
+\begin{itemize}
+\item We already compute these differentials for the purposes of determining the
+  period matrix of $X$ as well as in defining the Abel map.
+\item Fewer resolvent sets need to be determined. The denominator of every
+  Abelian differential of the first kind is $\partial_y f(x,y)$
+  \cite{Brieskorn86,Noether83} so one can compute the resolvent set of $f$ with
+  $\partial_y f$ once and use the results for any given basis element
+  $\tilde{\omega} = \tilde{\omega}_i$. This particular resolvent set consists of
+  the discriminant points of $f$ and is already used in the period matrix
+  calculations.
+\item The non-normalized differentials usually have simple, often monomial,
+  numerators making the set $\mathcal{X}_{\tilde{\omega}}^{(1)}$ easier to
+  compute and have smaller cardinality.
+\item The set of $P$ such that $x_P(0)$ is a branch point of $f$ is contained in
+  the set of discriminant points of $f$. Therefore, the computation of the set
+  $\mathcal{X}_{\tilde{\omega}}^{(3)}$ is a redundant calculation and is
+  omitted.
+\item In general, the valuation divisors of Abelian differentials of the first
+  kind consist of fewer distinct places. The degree of every canonical divisor
+  is $2g-2$. Therefore, there must always be $2g-2$ more zeros than poles,
+  counting multiplicities. Since Abelian differentials of the first kind have no
+  poles, no negative degree places appear in the valuation divisor thus
+  minimizing the total number of places to check.
+\item Algorithm \ref{alg:canonical} iteratively checks each $P \in
+  \mathcal{P}_{\tilde{\omega}}$ for membership in the set of places in $\DivC =
+  (\tilde{\omega})_\text{val}$. By using Abelian differentials of the first kind
+  we can terminate this procedure the moment $\deg \DivC$ reaches $2g-2$ since
+  each $P\in\mathcal{P}_{\tilde{\omega}}$ contributes a non-negative amount to
+  the degree. For this reason, we distinguish between the set of
+  $\mathcal{X}_{\tilde{\omega}}$ and corresponding places
+  $\mathcal{P}_{\tilde{\omega}}$ in order to avoid unnecessarily computing
+  Puiseux series expansions.
+\end{itemize}
+
+An algorithm for computing the valuation divisor of an Abelian differential of
+the first kind is given below.
+\begin{algorithm}[H]
+\caption{{\tt canonical\_divisor} - canonical divisor of a Riemann surface}
+\label{alg:canonical}
+\begin{algorithmic}[1]
+  \Require Riemann surface $X$ given by the desingularization and
+  compactification of complex plane algebraic curve $C : f(x,y) = 0$
+
+  \Require an Abelian differential of the first kind $\tilde{\omega} =
+  p(x,y) / \partial_y f(x,y) \dx$ on $X$
+
+  \Ensure canonical divisor $\DivC = (\tilde{\omega})_\text{val}$
+
+  \State $\DivC \gets$ zero divisor
+
+  \State $\mathcal{X}_{\tilde{\omega}}^{(1)} \gets$ roots of resolvent
+  $R(f,p)(x) = 0$
+
+  \State $\mathcal{X}_{\tilde{\omega}}^{(2)} \gets$ discriminant points of $f$
+
+  \State $\mathcal{X}_{\tilde{\omega}} \gets
+  \mathcal{X}_{\tilde{\omega}}^{(1)} \cup
+  \mathcal{X}_{\tilde{\omega}}^{(2)} \cup \{ \infty \}$
+
+  \For{$\alpha \in \mathcal{X}_{\tilde{\omega}}$}
+
+  \State $\mathcal{P}_{\tilde{\omega}}^\alpha \gets \left\{ P \in X \; |
+  \; x_P(0) = \alpha \right\}$
+
+  \For{$P \in \mathcal{P}_{\tilde{\omega}}^\alpha$}
+
+  \State $n \gets \text{val}\left(\tilde{\omega},P\right)$
+
+  \State $\DivC \gets \DivC + \,n P$
+
+  \If{$\deg \DivC = 2g - 2$}
+  \State \Return $\DivC$
+  \EndIf
+
+  \EndFor
+
+  \EndFor
+
+  \State {\bf raise error}(``Not enough places found.'')
+
+\end{algorithmic}
+\end{algorithm}
+Some notes about the algorithm:
+\begin{itemize}
+\item Only the leading order behavior of the Puiseux series of each place $P \in
+  \mathcal{P}_\omega^\alpha$ determining $\text{val}(\tilde{\omega},P)$ is
+  needed implying that computing only the ``singular part'' of these expansions
+  using the method of Duval is sufficient \cite{Duval89}.
+\item Since any Abelian differential of the first kind is sufficient for
+  computing a canonical divisor we can choose the basis element
+  $\tilde{\omega}_i$ with lowest total degree numerator $p=p(x,y)$ to reduce the
+  number of places to check and amount of symbolic arithmetic to perform.
+\item Algorithm \ref{alg:canonical} terminates once the target degree is met and
+  will spend no further effort computing places and valuations. Since the
+  numerators of $\tilde{\omega}_i$ are often monomial, a significant gain in
+  efficiency is observed when $\mathcal{X}_{\tilde{\omega}}$ is ordered such
+  that places over $x \in \{0,\infty\}$ are checked first. For testing purposes,
+  the algorithm can be modified to verify that $\text{val}(\tilde{\omega},P) =
+  0$ for all remaining $P \in \mathcal{P}_{\tilde{\omega}}$ after the degree
+  requirement is met.
+\item If the main loop in Algorithm \ref{alg:canonical} terminates before the
+  requisite degree is achieved then an error is reported. This is included as an
+  additional check for the algorithm. Yet another test is to verify that $\deg
+  (\tilde{\omega}_i)_\text{val} = 2g-2$ for all basis elements
+  $\tilde{\omega}_i$. Because this is an expensive calculation it is not
+  performed by default. Instead it is relegated to the {\sc abelfunctions} test
+  suite.
+\end{itemize}
+
+\begin{example} \label{ex:canonical} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For each non-normalized Abelian differential of the first kind from
+Example~\ref{ex:riemannsurface},
+\begin{equation}
+  \tilde{\omega}_1 = \frac{\dx}{3x^2y^2}, \quad
+  \tilde{\omega}_2 = \frac{x\dx}{3x^2y^2}, \quad
+  \tilde{\omega}_3 = \frac{xy\dx}{3x^2y^2}, \quad
+  \tilde{\omega}_4 = \frac{x^2\dx}{3x^2y^2},
+\end{equation}
+we compute its corresponding canonical divisor. First, we verify that
+\begin{equation}
+  (\tilde{\omega}_1)_\text{val} = 6 P_{x=\infty}
+  \qquad
+  \text{where}
+  \qquad
+  P_{x=\infty} = \left( t^{-3}, t^{-2} + O\left( t^2 \right) \right).
+\end{equation}
+That is, the valuation divisor consists of the single place, $P_{x=\infty}$, of
+multiplicity six.
+\begin{lstlisting}
+sage: C0 = omega[0].valuation_divisor()
+sage: for place,multiplicity in C0:
+....:     print multiplicity, place
+....:
+6 (t**(-3), t**(-2) + O(t**2))
+sage: C0.degree
+6
+\end{lstlisting}
+On the other hand, $(\tilde{\omega}_2)_\text{val}$ consists of two distinct
+places each of multiplicity three:
+\begin{equation}
+  (\tilde{\omega}_2)_\text{val} = 3 P_{x=\infty} + 3 P_{x=0}
+  \qquad
+  \text{where}
+  \qquad
+  P_{x=0} = \left( -t^3, -t^{-2} + O(t^2) \right).
+\end{equation}
+\begin{lstlisting}
+sage: C1 = omega[1].valuation_divisor()
+sage: for place,multiplicity in C1:
+....:    print multiplicity, place
+....:
+3 (t**(-3), t**(-2) + O(t**2))
+3 (-t**3, -1/t**2 + O(t**2))
+sage: C1.degree
+6
+\end{lstlisting}
+For the canonical divisor obtained from $(\tilde{\omega}_3)_\text{val}$ we have
+\begin{equation}
+  \mathcal{X}_{\tilde{\omega}_3} = \{0,\infty,1,-1,i,-i\},
+\end{equation}
+which consists of the discriminant points of $f$ and the point at infinity. The
+divisor $(\tilde{\omega}_3)_\text{val}$ happens to have non-zero valuation at
+the places lying above each of these points:
+\begin{equation}
+  (\tilde{\omega}_3)_\text{val}
+  =
+  \sum_{\alpha \in \mathcal{X}_{\tilde{\omega}_3}} P_{x=\alpha}.
+\end{equation}
+\begin{lstlisting}
+sage: C2 = omega[2].valuation_divisor()
+sage: for place,multiplicity in C2:
+....:    print multiplicity, place
+....:
+1 (-t**3, -1/t**2 + O(t**2))
+1 (-t**3/4 - 1, t + O(t**2))
+1 (-t**3*RootOf(_x**2 + 1, 0)/4 + RootOf(_x**2 + 1, 0), t + O(t**2))
+1 (t**(-3), t**(-2) + O(t**2))
+1 (t**3/4 + 1, t + O(t**2))
+1 (-t**3*RootOf(_x**2 + 1, 1)/4 + RootOf(_x**2 + 1, 1), t + O(t**2))
+sage: C2.degree
+6
+\end{lstlisting}
+Finally, we verify that $(\tilde{\omega}_4)_\text{val} = 6P_{x=0}$.
+\begin{lstlisting}
+sage: C3 = omega[3].valuation_divisor()
+sage: for place,multiplicity in C3:
+....:    print multiplicity, place
+....:
+6 (-t**3, -1/t**2 + O(t**2))
+sage: C3.degree
+6
+\end{lstlisting}
+Each of these canonical divisors satisfy the degree requirement $\deg \DivC =
+2g-2 = 6$.
+\end{example}
+
+
+%------------------------------------------------------------------------------
+\subsection{Computing a Half-Lattice Vector}
+%------------------------------------------------------------------------------
+
+
+Now that we have a canonical divisor $\DivC$ it remains to determine $\RCV(P_0)$
+knowing that $2\RCV(P_0) \equiv - \Abel(P_0,\DivC)$. For now, consider
+$\RCV(P_0)$ and $\Abel(P_0,\DivC)$ to be vectors in $\CC^g$ and set $\RCV_0 :=
+\RCV(P_0)$ and $\Abel_0^{\DivC} := \Abel(P_0,\DivC)$, for notational
+convenience. In $\CC^g$ we have
+\begin{equation}
+2\RCV_0 + \Abel_0^{\DivC} = \boldsymbol{\lambda},
+\end{equation}
+where $\boldsymbol{\lambda} \in \CC^g$ is unknown and $\boldsymbol{\lambda}
+\equiv \boldsymbol{0} \bmod{\Lambda}$, {\it i.e.} the vector
+$\boldsymbol{\lambda}$ is one of the $2^{2g}$ lattice vectors lying in the
+fundamental region of $\Lambda$. Division by two is now legal: setting
+$\boldsymbol{h} = \boldsymbol{\lambda}/2$ yields
+\begin{equation}
+\RCV_0 = \boldsymbol{h} - \tfrac{1}{2} \Abel_0^{\DivC}.
+\end{equation}
+Reducing this expression modulo $\Lambda$ gives the corresponding equivalence in
+$J(X)$
+\begin{equation}
+\RCV_0 \equiv \boldsymbol{h} - \tfrac{1}{2} \Abel_0^{\DivC},
+\end{equation}
+where the half-lattice vector $\boldsymbol{h}$ is unknown.
+
+To determine which of the $2^{2g}$ half-lattice vectors $\boldsymbol{h}_j, j =
+1, \ldots, 2^{2g}$ is the correct half-lattice vector we use Theorem
+\ref{thm:thetadivisor}. The theorem requires a degree $g-1$ effective divisor.
+Consider the divisor
+\begin{equation} \label{eqn:simple-effective-divisor}
+  \DivD = (g-1)P_0.
+\end{equation}
+Then
+\begin{align}
+  \theta\big(\Abel(P_0,\DivD) + \RCV(P_0), \Omega \big) \notag
+  &=
+  \theta\bigg(\Abel\big(P_0,(g-1)P_0\big) + \RCV(P_0), \Omega \bigg) \notag \\
+  &=
+  \theta\big(\boldsymbol{0} + \RCV(P_0), \Omega \big) \notag \\
+  &=
+  \theta\big(\RCV(P_0), \Omega \big) = 0.
+\end{align}
+Therefore, it is necessary that
+\begin{equation}
+  \theta\left(
+  \boldsymbol{h}_j - \tfrac{1}{2} \Abel_0^{\DivC}, \Omega
+  \right) = 0
+\end{equation}
+for {\it at least} one of the $2^{2g}$ half lattice vectors $\boldsymbol{h}_j$.
+The choice of divisor $\DivD$ above simplifies the computations. However, any
+appropriate divisor can be used in conjunction with
+Theorem~\ref{thm:thetadivisor} to obtain the RCV.
+
+
+\begin{algorithm}[t]
+\caption{{\tt half\_lattice\_vector}$(X,\DivC)$}
+\label{alg:half-lattice-vector}
+\begin{algorithmic}[1]
+
+\Require a Riemann surface $X$
+
+\Require a canonical divisor $\DivC$
+
+\Ensure a half lattice vector $\boldsymbol{h}$
+
+\State $\mathcal{J} \gets \left\{ 1, \ldots, 2^{2g} \right\}$
+
+\State $\DivD \gets (g-1)P_0$
+
+\State $\mathcal{J} \gets$ {\tt
+  half\_lattice\_filter}$(\mathcal{J},\DivC,\DivD)$ \Comment filter pass \#1
+
+\State {\bf if} $\mathcal{J} = \{j^*\}$ {\bf return} $\boldsymbol{h}_{j^*}$
+
+\State $\mathcal{D}_0 \gets P_1 + \cdots P_{g-1}$ where the $P_i$'s are
+distinct regular places
+
+\State $\mathcal{J} \gets$ {\tt
+  half\_lattice\_filter}$(\mathcal{J},\DivC,\DivD_0)$ \Comment filter pass \#2
+
+\State {\bf if} $\mathcal{J} = \{j^*\}$ {\bf return} $\boldsymbol{h}_{j^*}$
+
+\For{each $m_1, \ldots, m_{g-1} \geq 0$ with $m_1 + \cdots + m_{g-1} =
+  g-1$} \Comment filter pass \#3
+
+    \State $\mathcal{D}_k \gets m_1P_1 + \cdots + m_{g-1}P_{g-1}$
+
+    \State $\mathcal{J} \gets$ {\tt
+      half\_lattice\_filter}$(\mathcal{J},\DivC,\DivD_k)$
+
+    \State {\bf if} $\mathcal{J} = \{j^*\}$ {\bf return}
+    $\boldsymbol{h}_{j^*}$
+
+\EndFor
+
+
+\State {\bf raise error}(``Could not find appropriate half-lattice vector.'')
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+The idea behind Algorithm \ref{alg:half-lattice-vector} is to perform a number
+of ``filter passes'' to eliminate incorrect half-lattice vectors using the
+subroutine described in Algorithm \ref{alg:half-lattice-filter}. Each pass uses
+a different effective degree $g-1$ divisor beginning with the one defined in
+\eqref{eqn:simple-effective-divisor}. This heuristic approach is unfortunately
+needed due to the numerical approximation inherent in evaluating the Riemann
+theta function as well as in numerically integrating the differentials along the
+Riemann surface paths. Future work would offer verifiable techniques, similar to
+those used in Smale's alpha theory, so as to avoid the need for heuristic
+methods.
+
+
+
+\begin{algorithm}[t]
+\caption{{\tt half\_lattice\_filter}$(\mathcal{J},\DivC,\DivD)$}
+\label{alg:half-lattice-filter}
+\begin{algorithmic}[1]
+
+  \Require index set $\mathcal{J} \subset \{1, \ldots, 2^{2g}\}$
+
+  \Require a canonical divisor $\DivC$
+
+  \Require effective, degree $g-1$ divisor $\DivD$
+
+  \Ensure filtered index set $\tilde{\mathcal{J}}$
+
+  \State $\tilde{\mathcal{J}} \gets \mathcal{J}$
+
+  \State $\theta( \cdot, \Omega) \gets$ the Riemann theta function
+  uniformly accurate to order $\epsilon$
+
+  \State $\boldsymbol{Z} \gets \Abel(P_0,\DivD) - \tfrac{1}{2}
+  \Abel(P_0,\DivC)$
+
+  \For{$j \in \mathcal{J}$}
+
+      \State $\boldsymbol{\kappa}_j \gets \boldsymbol{h}_j + \boldsymbol{Z}
+      \bmod{\Lambda}$
+
+      \If{$|| \theta(\boldsymbol{\kappa}_j) || > \epsilon$}
+
+          \State remove $j$ from $\tilde{\mathcal{J}}$
+
+      \EndIf
+
+  \EndFor
+
+  \State \Return $\tilde{\mathcal{J}}$
+
+\end{algorithmic}
+\end{algorithm}
+
+Some notes on Algorithms \ref{alg:half-lattice-vector} and
+\ref{alg:half-lattice-filter}:
+\begin{itemize}
+\item If a candidate vector $\boldsymbol{\kappa}_j \in J(X)$ is, in fact, the
+  sought-after vector such that $\theta(\boldsymbol{\kappa}_j) = 0$ then it must
+  be so for all effective degree $g-1$ divisors $\DivD$. That is, for every such
+  divisor
+  \begin{equation}
+    \theta\big(\boldsymbol{\kappa}_j + \Abel(P_0,\DivD), \Omega \big) = 0.
+  \end{equation}
+  This can be used for additional verification of our results.
+\item Care must be used when setting the numerical accuracy for the computation
+  of the Riemann theta function. The default accuracy of $\epsilon = 10^{-8}$
+  used in {\sc abelfunctions} may be insufficient for finding a unique solution.
+  All numerical computations are performed using native double precision so one
+  must not set $\epsilon$ too close to $10^{-16}$ or else numerical round-off
+  error may affect results as well.
+\item In practice it is observed that {\it only one} of the $2^{2g}$
+  half-lattice vectors $\boldsymbol{h}_j$ yields $\theta(\RCV(P_0),\Omega) = 0$.
+  We have yet to find an example where the solution is not unique and expect
+  that uniqueness can be shown mathematically.
+\end{itemize}
+\begin{example}
+Finally, we provide examples of computing with the RCV.
+\begin{lstlisting}
+sage: K = RiemannConstantVector   # alias the RCV function for brevity
+sage: P0 = X.base_place()
+sage: K(P0)
+[ 0.8488+0.7203j -0.5941-0.1146j -0.7432+0.8913j -0.8189+1.1381j]
+\end{lstlisting}
+We computationally verify that the RCV satisfies Theorems \ref{thm:rcvequiv} and
+\ref{thm:thetadivisor}. First, we demonstrate that
+\begin{equation}
+  2\RCV(P_0) + \Abel(P_0,\DivC) \equiv \boldsymbol{0}.
+\end{equation}
+\begin{lstlisting}
+sage: z = J(2*K(P0) + AbelMap(C3))
+sage: z
+[ 0.+0.j  0.+0.j -0.-0.j -0.-0.j]
+\end{lstlisting}
+Next, we verify that $\RCV(P_0)$ belongs to the theta divisor. To test for
+membership we factor the Riemann theta function into its exponential and
+oscillatory parts \cite{NIST:DLMF,DHBvHS03},
+\begin{equation}
+  \theta(z,\Omega) = e^u v.
+\end{equation}
+Since the exponential part never vanishes we only examine the vanishing of the
+oscillatory part when determining $\RCV(P_0)$.
+\begin{lstlisting}
+sage: W = K(P0)
+sage v = RiemannTheta.oscillatory_part(W,Omega)
+sage: abs(v)
+2.60180216631e-08
+\end{lstlisting}
+
+%\tfrac{1}{2}\boldsymbol{A}_0^\DivC
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/oscvalues.eps}
+  \caption{The sorted magnitudes of the oscillatory parts of $\theta\big(
+    \boldsymbol{h}_j - \tfrac{1}{2}\Abel_0^{\DivC}, \Omega \big)$ for each of
+    the 256 half-lattice vectors $\boldsymbol{h}_j$. Note that the half-lattice
+    vector resulting in the correct RCV produces a theta value approximately
+    five orders of magnitude closer to zero than the others.}
+  \label{fig:oscvalues}
+\end{figure}
+
+Even with the default numerical integration and Riemann theta accuracy of
+$10^{-8}$ the choice of half-lattice vector producing the above RCV results in a
+Riemann theta value that is several orders of magnitude closer to zero than with
+the incorrect choices of half-lattice vector, as shown in Figure
+\ref{fig:oscvalues}.
+
+Let $\DivD$ be the divisor consisting of the three places lying above $x=2$ each
+of multiplicity one. $\DivD$ is an effictive divisor of degree $g-1 = 3$.
+Therefore, $\RCV(P_0) + \Abel(P_0,\DivD)$ is also a member of the theta divisor.
+\begin{lstlisting}
+sage: D = sum(places_above_two)
+sage: W = J(AbelMap(D) + K(P0))
+sage: v = RiemannTheta.oscillatory_part(W, Omega)
+sage: abs(v)
+1.09506634962e-10
+\end{lstlisting}
+\end{example}
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../thesis"
