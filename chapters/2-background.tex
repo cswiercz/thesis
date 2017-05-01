@@ -1,13 +1,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Background}\label{ch:background}
+\chapter{Complex Algebraic Geometry and Riemann Surfaces}\label{ch:background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this chapter we will give a brief overview of Riemann surfaces from the
+perspective of complex algebraic geometry. Among the primary references used in
+this thesis, Griffiths \cite{Giffiths89} provides one of the most succinct
+introductions to the subject without requiring background in algebraic geometry
+or algebraic curves and gives solid foundation from which to further explore the
+topic. Ueno's \cite{Ueno97} presentation is similar but with more emphasis on
+the algebraic perspectives whereas Bliss \cite{bliss} focuses on an analytic
+approach, instead. Dubrovin's \cite{Dubrovin81} classical manuscript includes
+connections to the Kadomtsev-Petviashvili equation introduced in
+\autoref{ch:kp}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Complex Algebraic Geometry}\label{sec:background-complex-algebraic-geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This section serves as a brief introduction to the theory of complex algebraic
-curves. Primary references are % TODO - griffiths and ueno references
+We begin with some preliminary constructions and facts from complex algebraic
+geometry. Thus section culminates in the Normalization Theorem which connects
+the subject to the study of Riemann surfaces. Although other computational
+approaches to Riemann surfaces exist, this connection make computation possible
+in the approach taken in this thesis.
 
 %..............................................................................
 \subsection{The Projective Line}
@@ -207,8 +221,8 @@ where $d$ is the degree of $F$. The homogeneity of $F$ means that we can write
   F(x_0,x_1,x_2) = \sum_{i+j+k=d} \alpha_{ijk} x_0^i x_1^j x_2^k.
 \]
 
-In terms of the projective polynomial $F$, its affine part can be written
-$f(x,y) = F(1,x,y)$. As in the case of a projective line, $f$ can be thought of
+In Terms Of The Projective Polynomial $F$, Its Affine Part Can Be Written
+$F(x,y) = F(1,x,y)$. As in the case of a projective line, $f$ can be thought of
 as a projection of the polynomial $F$ onto $\CC^2$ and there is always a
 one-to-one correspondence between an affine polynomial and its homogenization.
 Therefore, a {\it complex plane algebraic curve} is the set
@@ -454,7 +468,26 @@ $t$. This will be discussed in more detail in the following section.
   Surfaces}\label{sec:background-algebraic-curves-and-riemann-surfaces}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO introduction to section
+In the previous section we introduced the Normalization Theorem relating complex
+algebraic curves to Riemann surfaces. The main goal of this section is to derive
+the period matrix of a Riemann surface, the Abel Map, and the Riemann theta
+function. These three objects are the primary ingredients in constructing a
+large class of solutions to the Kadomtsev--Petviashvili equation, discussed in
+\autoref{ch:kp}, and determinantal representations of plane curves, discussed in
+\autoref{ch:determinantal}.
+
+Throughout this section we present computational examples using the Sage
+software package Abelfunctions \cite{abelfunctions}. Abelfunctions is a library
+which provides general and easy to use framework for computing with Abelian
+functions, Riemann surfaces, and algebraic curves. The reader may follow along
+in the computations by downloading and installing Sage \cite{sage} from
+\url{www.sagemath.org} and following the instructions on
+\url{github.com/abefunctions/abelfunctions} for downloading and installing
+Abelfunctions.
+
+See \autoref{ch:abelfunctions} for information on the algorithms used and design
+of the software. In particular, an algorithmic perspective on the below
+components can be found in \autoref{sec:abelfunctions-algorithms}.
 
 \begin{figure}
 \centering
@@ -504,6 +537,13 @@ $t$. This will be discussed in more detail in the following section.
 \end{figure}
 
 
+The examples used in this chapter use the curves,
+\begin{align} \label{eq:example-curves}
+  C_2:  \\
+  C_5:  \\ 
+\end{align}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Puiseux Series}\label{subsec:background-puiseux-series}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -534,20 +574,21 @@ which can be thought of as an extension of Laurent series.
   where $N \in \ZZ \cup \{-\infty\}$, $\alpha, \lambda_j, \beta_{jk} \in \CC$,
   and $e_j,n_{jk} \in \ZZ$. Each Puiseux series $P_j$ is a ``place'' on $C$.
 \end{definition}
-A place $P_j = P_j(t)$ satisfies
+A place $P_j = P_j(t)$ satisfies,
 \[
     f\big(P_j(t)\big) := f\big(x_j(t), y_j(t)\big) = 0.
 \]
 When a Puiseux series $P_j(t)$ represents an expansion about a non-singular
 $(\alpha, \beta_j)$ on the curve then $P(0) = (\alpha,\beta)$. This is not
-necessarily the case about singular places. We list some additional important
+necessarily the case with singular places. We list some additional important
 facts and properties of Puiseux series.
 \begin{itemize}
 \item The integer $|e_j|$ is called the {\it branching number} or {\it
     ramification index} of the series expansion at that place: $|e_j| > 1$ when
   $x = \alpha$ is a branch point of the curve.
-\item The number of Puiseux series $m$ at a branch point $x = \alpha$ is
-  strictly less than $d = \text{deg}_y f$. However, $d = \sum_{j=1}^m |e_j|$.
+\item The number of Puiseux series $m$ at a branch point $x = \alpha$ is less
+  than or equal to $d = \text{deg}_y f$. In particular, $d = \sum_{j=1}^m
+  |e_j|$.
 \item The field of Puiseux series is a splitting field for $\CC[x,y] =
   \CC[x][y]$. That is, given any $f \in \CC[x,y]$ and Puiseux series expansions
   about any $x=\alpha$ we can write
@@ -560,38 +601,6 @@ facts and properties of Puiseux series.
   $t$ in terms of $x$. Note that a Puiseux series $P_j$ with ramification index
   $|e_j|>1$ splits into $|e_j|$ $y$-series in $x$.
 \end{itemize}
-
-%..............................................................................
-\subsubsection*{Algorithm}
-%..............................................................................
-
-The algorithm used in {\it abelfunctions} for computing truncations of Puiseux
-series expansions is based on that of Duval \cite{Duval89}. The main ingredient
-of the algorithm are Newton polygons of algebraic curves. We give a brief
-outline of the process here.
-\begin{itemize}
-\item The goal of the algorithm is to compute a list of tuples $\pi = (\tau_1,
-  \tau_2, \ldots, \tau_R)$ where $\tau_i = (q_i,\mu_i,m_i,\beta_i,\eta_i)$.
-  These tuples define the relations
-  \begin{align*}
-    X_{i-1} &= \mu_i X_i^{q_i}, \\
-    Y_{i-1} &= (\beta_i + \eta_iY_i)X_i^{m_i},
-  \end{align*}
-  where $i = 1, \ldots, R$. To obtain the desired Puiseux series we set $x =
-  X_0$, $y = Y_0$, and $t = X_R$ and eliminate the intermediate variables
-  $X_1,\ldots,X_{R-1}$ and $Y_1,\ldots,Y_{R-1}$.
-\item The first set of $\tau_i$ computed are those representing the {\it
-    singular part} of $P$, that is, the part of the series if the Puiseux series
-  has a ramification index $|e_j|>1$. This is done using the Newton polygon
-  method. The output of this stage of the algorithm provides enough information
-  to distinguish the Puiseux series expansions at $x=\alpha$.
-\item Finally the algorithm computes the {\it regular} terms of the Puiseux
-  series using a standard Taylor series techniques.
-\end{itemize}
-
-%..............................................................................
-\subsubsection*{Examples}
-%..............................................................................
 
 \begin{example} \label{ex: 3-puiseux} Consider the curve
   \[
@@ -699,69 +708,6 @@ finite and infinity, of $C$. Then the genus is given by
   g = \frac{(d-1)(d-2)}{2} - \sum_{P \in S} \delta_P.
 \end{equation}
 
-
-%
-\subsubsection*{Algorithm}
-%
-
-First we determine the finite singularities of $C : f(x,y) = 0$. Let $R(x)$ be
-the resultant of $f(x,y)$ and $\partial_y f(x,y)$ \cite{Griffiths89}. We compute
-the roots
-\begin{align*}
-    S &= \{ x \in \CC \; | \; R(x) = 0, \partial_x R(x) = 0 \} \\
-      &= \{ x_1, \ldots, x_s \}.
-\end{align*}
-For each $x_j \in S$ we compute the $y$-roots $\{y_{j1},\ldots,y_{jd}\}$
-where $d = \text{deg}_y f$. The places $(x_j,y_{jk})$, $j=1,\ldots,s$,
-$k=1,\ldots,d$ satisfy
-\[
-    f(x_j,y_{jk}) = 0, \quad \partial_y f(x_j,y_{jk}) = 0,
-\]
-by the definition of the resolvent. Therefore, the singular places
-$(x_k,y_{jk})$ are those that satisfy
-\[
-    \partial_x f(x_j,y_{jk}) = 0.
-\]
-By definition, these remaining places are the finite singular points of the
-curve $C$. For the infinite case we use the projection of the curve on the line
-at infinity. (See Section \ref{sec: projective-plane-curves}.)
-
-%% To compute the branching number of a singular point $(\alpha,\beta)$ we
-%% simply calculate the sum of the ramification indices at all Puiseux series
-%% $P_j$ such that $P_j(0) = (\alpha,\beta)$.
-
-%% We can also use Puiseux series to compute the multiplicity of a singular point.
-
-The methods used to compute the branching number, multiplicity, and delta
-invariant of a singularity rely on examining the leading order behavior of the
-Puiseux series expansions such that $P_j(0) = (\alpha, \beta)$. For the details
-of these methods see \cite{DeconinckPatterson11}. In brief the branching number
-$R$ of singularity is computed using the above formula
-\[
-  R \quad = \sum_{\substack{j \\ P_j(0)=(\alpha,\beta)}} |e_j|.
-\]
-The multiplicity is the sum of the minimum of $e_j$ and $n_{jN}$ over all
-Puiseux series $P_j$ such that $P_j(0) = (\alpha,\beta)$ where $\beta_{jN} t
-^{n_{jN}}$ is the first non-zero, non-constant term appearing the in $y_j$. The
-delta invariant is equal to
-\[
-    \delta = \frac{1}{2}\sum_{j=1}^m r_j \text{Int}_{P_j} - r_j + 1,
-\]
-where
-\[
-  \text{Int}_{P_j} = \sum_{k=1^d, k \neq j} \text{val}_x \big( y_j(x) -
-  \tilde{y}_k(x) \big),
-\]
-with $\text{val}_x( g(x))$ equal to the lowest exponent of $x$ appearing in
-$g(x)$, and $y_j(x)$ is the $y$-part of $P_j$ when solving for $t = t(x)$. The
-sum appearing in $\text{Int}_{P_j}$ is taken over {\it all} Puiseux series
-expansions $P_k$ at $x = \alpha$, not just the ones with $P_k(0) = (\alpha,
-\beta)$.
-
-%
-\subsubsection*{Examples}
-%
-
 We compute the finite singularities $a = (1 : \alpha : \beta)$ and the infinite
 singularities $a = (0 : 1 : \gamma)$ of the curve
 \[
@@ -850,89 +796,6 @@ be the case that the $x$-path $x_\gamma(t)$ is closed in $\CC_x$ but the derived
 $y$-path $y_\gamma(t)$ may not satisfy $y_\gamma(0) = y_\gamma(1)$. This
 situation is described in more detail in Section \ref{sec: monodromy} on
 monodromy groups of algebraic curves.
-
-%
-\subsubsection*{Algorithm}
-%
-
-To compute a path $\gamma$ on a Riemann surface $C$ we provide a continuous
-$x$-path $x_\gamma(t)$ and an initial $y$-value $y_0$ as input and we wish to
-receive the resulting $y$-path $y_\gamma(t)$ as output. Analytic continuation of
-$y_0$ along $\gamma$ is a fundamental operation in {\tt abelfunctions} since
-evaluation of and integration along paths is done frequently. Therefore, it is
-important to make the construction and evaluation along paths as fast and
-efficient as possible.
-
-We use numerical methods to estimate values along $y_\gamma(t)$. In general, the
-problem is phrased as given $\gamma(t_i) = (x_i,y_i)$ as well as some later
-$t_{i+1} = t_i + \Delta t$ and $x_{i+1} = x_\gamma(t_{i+1})$ determine the value
-$y_{i+1} = y_\gamma(t_{i+1})$.
-
-A first and natural approach to solving this problem is to use a root finder.
-Given $x_{i+1}$ we numerically or symbolically solve the equation
-\[
-  f(x_{i+1},y) = 0.
-\]
-This produces $n$ $y$-roots $y_{i+1,1}, \ldots, y_{i+1,d}$ over $x_{i+1}$.
-However, even if one finds an effective and fast method for doing this with
-arbitrary degree polynomials $f$, the main problem with this approach is
-determining which $y_{i+1,k}$ is equal to the desired root $y_{i+1}$. One could
-argue that the desired root is the one minimizing $|y_{i+1,k} - y_i|$ (the root
-closest to the previous $y$-root) but it is conceivable that this closest can
-change as a function of $\Delta t$, especially if $\Delta t$ is too large.
-
-Another approach could be to use Newton iteration: given $x_{i+1}$ and an {\it
-  initial guess} $y_i$ at $x_i$ use Newton iteration on the function $g(y) =
-f(x_{i+1}, y)$ to determine $y_{i+1}$. However, this approach suffers from the
-same problem, namely, the root $y_{i+1,k}$ produced by Newton iteration may
-change as a function of $\Delta t$. Too large of a $\Delta t$ may result in {\it
-  branch jumping}, where we converge to the incorrect $y$-root. Too small of a
-$\Delta t$ gives an inefficient numerical algorithm. Further, the definition of
-``small enough'' may change as a function of the curve $C$ and the $x$-points
-$x_{i}$ and $x_{i+1}$.
-
-To solve the problem of selecting an appropriate $\Delta t$ we use Smale's
-$\alpha$-theory \cite{Smale85}. The purpose of Smale's $\alpha$-theory is to
-answer the following questions about $g(y) = f(x_{i+1},y)$ for some finite set
-of points $Y \subset \CC$:
-\begin{enumerate}
-\item From which points in $Y$ will Newton's method converge quadratically to
-  some solution to $g$?
-\item From which points in $Y$ will Newton's method converge quadratically to
-  distinct solutions to $g$?
-\item If $g$ is real ($\bar{g} = g$), from which points of $Y$ will Newton's
-  method converge quadratically to real solutions to $g$?
-\end{enumerate}
-See \cite{HauensteinSottile10} for an excellent summary of Smale's
-$\alpha$-theory. Using the notation of Hauenstein and Sottile, we outline the
-analytic continuation algorithm here.
-\begin{enumerate}
-\item Assume we know the {\it $y$-fibre} $y_i = \{y_{i,1},\ldots,y_{i,d}\}$ of
-  $g_i(y) := f(x_i,y)=0$. Fix some initial $\Delta t$ and let $x_{i+1} =
-  x_\gamma(t_i + \Delta t)$. We wish to compute the $y$-fibre $y_{i+1}$ of
-  $g_{i+1}(y) := f(x_{i+1},y)$ such that each element $y_{i+1,j}$ is the
-  analytic continuation of $y_{i,j}$ to $x_{i+1}$.
-\item We first determine if the $y$-fibre $y_i$ is an {\it approximate solution}
-  to $g_{i+1}(y) = 0$. Does each element of $y_i$ lie in the quadratic
-  convergence region of Newton's method on $g_{i+1}$?
-
-  If not, return to Step (1) with $\Delta t \mapsto \Delta t / 2$.
-\item Next, determine if the approximate solutions $y_{i,j}$ will converge to
-  distinct associated solutions $y_{i+1,j}$: will the approximate solutions jump
-  branches or stay on their respective branches?
-
-  If not, return to Step (1) with $\Delta t \mapsto \Delta t / 2$.
-\item The $y$-fibre satisfies the necessary conditions for Newton iteration to
-  converge to the appropriate analytic continuations $y_{i+1,j}$ at $x_{i+1}$.
-  Newton iterate and output this solution $y$-fibre.
-\end{enumerate}
-
-Note that this algorithm requires analytically continuing all of the $y$-roots
-along an $x$-path in the complex plane since we cannot determine an appropriate
-step size for continuing a given root without knowing the locations of the other
-roots. Although this impacts the performance of the algorithm since we have to
-perform $d$ sets of Newton iterations at each step, Smale's $\alpha$-theory
-provides a rigorous method for determining an appropriate step size.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1034,53 +897,6 @@ condition on the monodromy paths, moving the base point $\alpha_0$ corresponds
 to conjugation of the generators of the fundamental group by some $\pi \in S_d$.
 Hence, the monodromy group has explicit dependence on the base point.
 
-
-%
-\subsubsection*{Algorithm}
-%
-
-The algorithm implemented in {\tt abelfunctions} for computing the monodromy
-group of a curve is based on the one described in \cite{FKS12}. Due to the
-technical nature of the algorithm only a summary is provided here.
-
-\begin{itemize}
-\item We require that the monodromy paths constructed stay sufficiently far from
-  the branch points due to the numerical accuracy of Newton's method when used
-  in the analytic continuation process. For each branch point, $b_i$ we let
-  \[
-    \rho_i = \text{min}_{\substack{j=1,\ldots,n \\ j\neq i}} |b_i - b_j|.
-  \]
-  The minimal distance that any path $x_\gamma$ be from the branch point $b_i$
-  is
-  \[
-    R_i = \frac{\rho_i \kappa}{2}
-  \]
-  where $\kappa \in (0,1]$ is a chosen relaxation factor. The implementation of
-  this algorithm in {\tt abelfunctions} uses $\kappa = 3/5$.
-\item Let $b = b_i$ be the branch point where $\re b_i < \re b_j$ for all $j
-  \neq i$. The point $b$ is referred to as the {\it base branch point}. Choose
-  the base point $\alpha_0$ to be the point $\alpha_0 = b - R_b$, the point on
-  the minimal distance circle encircling $b$.
-\item Order the remaining branch points $\{b_j\}_{j \neq i}$ by increasing
-  argument with $b$. This ordering determines the ordering of the monodromy
-  paths $x_{\gamma_j}$.
-\item Construct a complete graph $G$ with the branch points $b_1,\ldots,b_n$ as
-  nodes and compute the minimal spanning tree $T$ of this graph with $b$ as the
-  parent node.
-\item Using line segments and semi-circles, construct the path $x_{\gamma_j}$
-  encircling $b_j$ once in the positive direction by starting at the base point,
-  following the minimal spanning tree to $b_j$ and using semicircles to traverse
-  over or under the branch points along the way depending on the ordering. That
-  is, the path $x_{\gamma_j}$ should be constructed in such a way so that the
-  branch points $b_1,\ldots,b_{j-1}$ lie below the path.
-\item Fix an ordering of the base fibre $(y_0,\ldots,y_{d-1})$ above $\alpha_0$
-  and analytically continue around each $x_{\gamma_j}$ to determine the
-  permutations $\pi_j$.
-\end{itemize}
-
-%
-\subsubsection*{Examples}
-%
 
 We compute the monodromy group of the curve
 \[
@@ -1473,34 +1289,6 @@ requirements is called a {\it canonical basis of cycles}. Figure \ref{fig:
 \end{figure}
 
 
-%
-\subsubsection*{Algorithm}
-%
-
-Tretkoff and Tretkoff \cite{TretkoffTretkoff84} provide an algorithm for
-determining a canonical cycle basis for $H_1(X,\ZZ)$ given the monodromy group
-of a curve. We omit the details of the algorithm here. At its core, it computes
-a graph which encodes how to travel from the {\it base place} of $X$, chosen to
-be
-\[
-  P_0 = (\alpha_0, \beta_0)
-\]
-where $\alpha_0$ is the base point of the monodromy group of the curve and
-$\beta_0 = y_0$ is a fixed root lying above $x = \alpha_0$, to the other places
-$(\alpha_0, y_i)$ lying above $x = \alpha_0$ via traversal around one or more
-branch points. (These places are sometimes called the {\it sheets} of the
-surface $X$ with the $i$th sheet referring to the place $(\alpha_0,y_i)$). A
-minimal spanning tree of this graph is computed where each removed edge
-corresponds to a cycle in $H_1(X,\ZZ)$. The is because the addition of an edge
-to the minimal spanning tree forms a cycle in the graph. This graph cycle in
-turn represents a possibly a non-zero cycle on $X$. A separate part of the
-algorithm is then used to compute a canonical basis of cycles by taking
-appropriate linear combinations of these intermediate cycles.
-
-%
-\subsubsection*{Examples}
-%
-
 We compute a homology basis for the Riemann surface $X$ obtained by
 desingularizing and compactifying the curve
 \[
@@ -1619,77 +1407,6 @@ polynomials $p_k$ are called the {\it adjoint polynomials of $f$}. Note that
 since $y$ has explicit dependence on $x$ due to the equation $f(x,y) = 0$, we
 can use $x$ as the local coordinate of the differential.
 
-%
-\subsubsection*{Algorithm}
-%
-
-One condition on the $p_k$'s is immediately apparent: to preserve holomorphicity
-$p_k$ must have a zero, with sufficient multiplicity, at the places $P =
-(\alpha,\beta)$ where $\partial_y f(x,y)$ vanishes. More precisely, Noether
-showed that if a singular place $P$ has multiplicity $m_P$ then $P_k$ must have
-a zero of order at least $m_P - 1$ at $P$ \cite{Noether83}.
-
-The technique we use to determine the adjoint polynomials $p_k$ uses a theorem
-of M\~{n}uk relying on computing an integral basis for the algebraic function
-field of the curve \cite{Mnuk97}. Let $A(C)$ be the {\it coordinate ring}
-\[
-  A(C) = \CC[x,y] / (f)
-\]
-of the curve $C : f(x,y) = 0$. The coordinate ring can be though of as the ring
-of all functions $g \in \CC[x,y]$ vanishing on the curve $f$. Note that $A(C)$
-is a subset of the {\it algebraic function field} $\CC(x,y)$.
-
-Given a ring $R$ and a field $S$ such that $R \subset S$, the {\it integral
-  closure $\bar{R}$ of $R$ in $S$} is the ring of all elements $s \in S$ such
-that
-\[
-  s^n + r_{n-1}s^{n-1} + \cdots + r_1 s + r_0 = 0,
-\]
-for some choice of $n >0$ and $r_0,\ldots,r_{n-1} \in R$. That is $\bar{R}$
-consists of all elements in $S$ satisfying some monic polynomial equation with
-coefficients in $R$. Here, we consider the integral closure $\overline{A(C)}$ of
-$A(C)$ in $\CC(x,y)$.
-
-Again, we wish to find the set of all adjoint polynomials of $C$. By
-\cite{Mnuk97}, these are the set of all $p \in \CC[x,y]$ such that
-\[
-  \overline{A(C)} p(x,y) \subset\CC[x,y].
-\]
-That is, all of the polynomials $p$ such that every element of
-$\overline{A(C)}$, when multiplied by $p$ and reduced modulo $f(x,y)$, results
-in a polynomial. Now, $\overline{A(C)}$ is a finite extension of $A(C)$.
-Therefore,
-\[
-  \overline{A(C)} = \beta_1 A(C) + \cdots + \beta_m A(C), \quad \beta_k \in
-  \CC(x,y).
-\]
-for an appropriate choice of $\beta_k$'s in $\CC(x,y)$. The set
-$\{\beta_1,\ldots,\beta_m\}$ is called the {\it integral basis} of the integral
-closure of the coordinate ring. Thus, finding the set of adjoint polynomials is
-equivalent to finding polynomials $p \in \CC[x,y]$ such that
-\[
-  \beta_k(x,y) p(x,y) \in \CC[x,y], \quad \forall j=1,\ldots,m.
-\]
-
-To compute the adjoint polynomials we write
-\[
-  p(x,y) = \sum_{i+j \leq d-3} c_{ij}x^iy^j
-\]
-where $d = \text{deg}_y f$. We compute an integral basis
-$\{\beta_1,\ldots,\beta_m\}$ for $\overline{A(C)}$ using the algorithm of van
-Hoeij \cite{vanHoeij94}. The requirement that
-\[
-  \beta_k(x,y) \sum_{i+j \leq d-3} c_{ij}x^iy^j \in \CC[x,y]
-\]
-imposes a number of conditions on the coefficients $c_{ij}$ appearing in the
-expression for $p(x,y)$. The set of all possible $c_{ij}$'s satisfying these
-conditions for every $\beta_k, k=1,\ldots,m$ gives us the adjoint polynomials we
-need.
-
-%
-\subsubsection*{Examples}
-%
-
 We compute a basis of holomorphic 1-forms on the Riemann surface $X$ given by
 the desingularization and compactification of the algebraic curve
 \[
@@ -1770,53 +1487,6 @@ conditions on when a given Riemann matrix is a period matrix of some algebraic
 curve.
 
 %TODO Schottky problem
-
-%
-\subsubsection*{Algorithm}
-%
-
-To compute $A_{ij}, B_{ij}$ we first a method for numerically integrating
-holomorphic differentials over any given path $\gamma \subset C$. We only
-consider finite paths on the curve: paths with finite $x$- and $y$-components.
-Any such path can be parameterized by some parameter $t \in [0,1]$. Let
-\[
-  \gamma : [0,1] \to C, \quad \gamma(t) = \Big( x_\gamma(t),
-  y_\gamma\big(x_\gamma(t)\big) \Big).
-\]
-(Recall that we treat $y$ as the dependent variable in $f(x,y)=0$.) Given this
-parameterization, we compute the integral of a holomorphic differential
-$\omega$. Letting $x$ and $y$ represent the local coordinates in $\CC^2$ we have
-\begin{align}
-  \int_\gamma \omega
-  &=
-    \int_\gamma \omega\big(x,y(x)\big)dx \notag \\
-  &=
-    \int_0^1 \omega \Big(
-    x_\gamma(t), y_\gamma\big(x_\gamma(t)\big) \Big)
-    \frac{dx_\gamma}{dt}(t) dt. \label{eqn: path-integral}
-\end{align}
-
-In {\tt abelfunctions} we construct paths $\gamma \subset C$ where $x_\gamma$
-either parameterizes a line from some $z_0\in\CC$ to $z_1\in\CC$
-\[
-  x_\gamma(t) = z_0(1-t) + z_1t,
-\]
-or arcs on a circle of radius $R$ with center $w\in\CC$
-\[
-  x_\gamma(t) = w + Re^{i(\theta + t \Delta \theta)}
-\]
-where $\theta$ is the starting angle and $\theta + \Delta \theta$ is the ending
-angle on the circle. We use the analytic continuation methods described in
-Section \ref{sec: analytic-continuation} to compute $y_\gamma(x_\gamma(t))$.
-Finally, to compute the integral in Equation \eqref{eqn: path-integral} we use a
-numerical integrator of choice. {\tt abelfunctions} allows one to use any
-numerical integrator provided by the {\tt scipy} Python package that can
-integrate complex-valued functions. The Romberg method \cite{wiki:Romberg} is
-chosen by default.
-
-%
-\subsubsection*{Examples}
-%
 
 The \verb=RiemannSurface.period_matrix()= method returns the matrices $A$ and
 $B$ defined above. The Riemann matrix $\Omega$ is obtained by computing $\Omega
