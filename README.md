@@ -4,17 +4,19 @@
 
 ## Working Outline
 
-*(Rough sketch for now.)*
+> *(Work in progress)*
 
-1. Introduction
+1. **Introduction**
+  * Connecting Algebraic Geometry and Partial Differential Equations
   * The KP Equation: Lax representation, stational flows and algebraic curves
-  * Finite genus solution formule
-  * Chapter Summary
-1. Riemann Surfaces
-  * Algebraic Curves: theory starting from basic complex analysis
+  * Finite genus solution formulae
+2. **Background**
+  * Algebraic Curves
+    * Complex Analysis
+    * Line at Infinity
   * Riemann Surfaces
+    * Connection with algebraic curves
   * Riemann Matrices
-    * (each section below include "Theory" and "Computation" sections)
     * Puiseux series
     * Integral Basis
     * Singularities
@@ -23,7 +25,13 @@
     * Homology
     * Riemann Matrices
   * Abel Map
-1. Finite Genus KP Solutions
+3. **Abelfunctions**
+  * Reproducibility and Scientific Software Design
+  * A Brief Look at Object Oriented-Design
+  * A Tour of Abelfunctions
+  * Algorithms
+    * *(Similar list as in **Background/Riemann Matrices**)*
+4. **Finite Genus KP Solutions**
   * Lax Formulation (Revisited)
   * KP Heirarchy
   * Baker-Akhiezer Functions
@@ -31,5 +39,6 @@
   * Real Solutions
   * (r,n) Solutions
   * Initial Data (?)
-1. (Other Applications): bitangents? KdV? NLS? Fay's Prime Form?
+5. **Determinantal Representations of Algebraic Curves**
+6. **Future Directions**
 
