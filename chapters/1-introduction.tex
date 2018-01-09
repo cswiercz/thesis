@@ -1,4 +1,73 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Introduction}
+\chapter{Introduction} \label{ch:Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+% ------------------------------------------------------------------------------
+\section{The Story} \label{sec:the-story}
+% ------------------------------------------------------------------------------
+
+It should come as a surprise that there is an intimate connection between the
+theory of nonlinear waves and algebraic geometry.
+
+% ------------------------------------------------------------------------------
+\section{Outline} \label{sec:outline}
+% ------------------------------------------------------------------------------
+
+Chapter \ref{ch:background} presents a succinct introduction to the field of
+complex algebraic geometry and Riemann surfaces. A student approaching the
+subject need only the basics of complex analysis to get started. It begins with
+an introduction to algebraic curves and their geometry. We then connect these
+curves to the theory of Riemann surfaces and demonstrate, at least in the
+compact and connected case, that the two are synonymous. The bulk of the chapter
+dives deep into the study of Riemann surfaces from this perspective of algebraic
+curves building up the necessary machinery needed to define the {\it Jacobian}
+of a Riemann surface and its associated {\it Period Matrix}; central objects of
+focus for much of the work in this thesis as well as current research in the
+field. The chapter concludes with two key objects defined on the Jacobian, the
+{\it Abel Map} and {\it Riemann Constant Vector}, as well the {\it Riemann theta
+  function}. Each of these are primary ingredients in the connection to and
+calculation of solutions to the Kadomtsev-Petviashvili equation.
+
+If Chapter \ref{ch:background} presents the theory then Chapter
+\ref{ch:abelfunctions} contains the corresponding algorithms which allow us to
+experiment with Riemann surfaces on a computer. For each key concept described
+in the previous chapter we present efficient algorithms for their computation
+along with a collection of examples. These algorithms are gathered together in a
+Sage package called {\it Abelfunctions}. We spend some time in this chapter
+discussing the high-level design of this package including how important
+principles in software design allows the package to be easily extendible. 
+
+Chapters \ref{ch:kp} and \ref{ch:determinantal} showcase the use of these
+algorithms to compute the finite-genus solutions to the Kadomtsev-Petviashvili
+equation as well as determinantal representation of algebraic curves. Previous
+approaches to computing periodic solutions to KP are either too restrictive (the
+resulting solution space is not dense in the space of periodic solutions) or
+rely on direct numerical simulation where the accuracy of the solution degrades
+over time. In contrast, the finite-genus solutions derived by the Riemann
+surface machinery is valid for all space and time. The work on determinantal
+representations presented here is the computational realization of the theory
+developed by Helton and Vinnikov, the importance of which lies in the
+application to polynomial optimization algorithms.
+
+% ------------------------------------------------------------------------------
+\section{Acknowledgements} \label{sec:acknowledgments}
+% ------------------------------------------------------------------------------
+
+First and foremost I would like to thank my wife, Megan Karalus. Thank you for
+your love and unending patience. You stood by me when things got tough,
+celebrated with me when things got better, and encouraged me to finish what I
+started. Thank you to the many people in the Applied Mathematics department at
+the Univeristy of Washington for shaping me into the mathematican, computer
+scientist, and human being that I am today. Bernard for his mentorship and
+comraderie, Randy for encouraging me to keep one toe in the HPSC world, Lauren
+for her friendship and advice; and Daniel, Lowell, and Alan for their friendship
+and the many hours spent at the College Inn. Thank you to Amazon AI for
+believing that I can make a difference in this world by creating great things
+and by providing a rich an supportive environment where the interface between
+mathematical research and high performance computation find a natural home.
+Finally, this work was generously supported bpy the National Science Foundation
+under grant NSF-DMS-1008001. Any opinions, findings, and conclusions or
+recommendations expressed in this material are those of the authors and do not
+necessarily reflect the views of the funding sources.
