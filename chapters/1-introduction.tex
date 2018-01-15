@@ -2,13 +2,50 @@
 \chapter{Introduction} \label{ch:Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+In this thesis we tell a story of how the theory of nonlinear waves shares a
+deep connection with the field of algebraic geometry.
 
 % ------------------------------------------------------------------------------
 \section{The Story} \label{sec:the-story}
 % ------------------------------------------------------------------------------
 
-[INSERT SETUP HERE]
+The Kadomtsev--Petviashvili equation is a nonlinear partial differential
+equation used to describe two-dimensional surface waves,
+\begin{equation}
+  \left( -4u_t + 6uu_x + u_{xxx} \right)_x + 3\sigma^2u_{yy} = 0.
+\end{equation}
+The KP equation is a generalization of the Korteweg-de Vries (KdV) equation,
+\begin{equation}
+  4u_t = 6uu_x + u_{xxx},
+\end{equation}
+and in fact the equation appears as a sub-expression in the KP equation. The
+water waves modeled by the KP equation are typically of long wavelength and are
+weakly two-dimensional in that there is a dominant direction of propagation with
+smaller-scale oscillations ocurring in the transverse direction.
+
+The KP equation admits a large family of quasi-periodic solutions of the form,
+\begin{equation}
+  u(x,y,t) = 2 \partial_x^2 \theta(z, \Omega),
+  \quad
+  z_j(x,y,t) = U_jx + V_jy + W_jt + \phi_j
+\end{equation}
+where $\theta : \mathbb{C}^g \times \mathbb{C}^{g \times g} \to \mathbb{C}$ is
+the {\it Riemann theta function of genus $g$}. This space of solutions is dense
+in the space of all periodic solutions and, therefore, fundamental to the study
+of the equation.
+
+Before continuing with the story it is important to mention that KP-like waves
+certainly appear in nature. In Figure \ref{fig:real-life} we see two examples of
+the periodic structure emerging from chaotic conditions. The photograph in
+Figure \ref{fig:ile-de-re} was captured on a particularly windy day off the
+coast of \^{I}le de R\'{e} in France. Figure \ref{san-diego-harbor} was actually
+taken in the lab where a conference room-sized model of the proposed San Diego
+harbor was constructed [TODO REF] before direct numerical simulation was
+feasible. In this image we can see two phases of waves: on the bottom left and
+top right there are long, KdV-like one-dimensional waves. In the bottom right is
+the characteristic hexagonal wave structure of a ``typical'' KP solution. We
+will later see that these structures correspond to different genera of
+quasi-periodic KP solution.
 
 \begin{figure}
   \centering
@@ -27,22 +64,10 @@
   \label{fig:real-life}
 \end{figure}
 
-Before continuing with the story it is important to mention that KP-like waves
-certainly appear in nature. In Figure \ref{fig:real-life} we see two examples of
-the periodic structure emerging from chaotic conditions. The photograph in
-Figure \ref{fig:ile-de-re} was captured on a particularly windy day off the
-coast of \^{I}le de R\'{e} in France. Figure \ref{san-diego-harbor} was actually
-taken in the lab where a conference room-sized model of the proposed San Diego
-harbor was constructed [TODO REF] before direct numerical simulation was
-feasible. In this image we can see two phases of waves: on the bottom left and
-top right there are long, KdV-like one-dimensional waves. In the bottom right is
-the characteristic hexagonal wave structure of a ``typical'' KP solution. We
-will later see that these structures correspond to different genera of
-quasi-periodic KP solution.
-
-The path to quasi-periodic KP solutions begins in complex analysis with
-algebraic curves. An algebraic curve is the complex solution set to a bi-variate
-polynomial equation,
+Perhaps miraculously, the path to deriving, as well as computing, the
+finite-genus KP solutions takes us through the field of algebraic geometry
+beginning in complex analysis with algebraic curves. An algebraic curve is the
+complex solution set to a bi-variate polynomial equation,
 \begin{equation}
   C_f: \left\{
     (\lambda, \mu) \in \CC^2
@@ -52,8 +77,30 @@ polynomial equation,
 \end{equation}
 Algebraic curves are closely related to Riemann surfaces in that, modulo minor
 details, a holomorphic mapping takes every algebraic curve to a Riemann surafce
-and vice-versa. This close connection opens up a world of tools from the geomery
-of Riemann surfaces to be realized using computable algebraic tools.
+and vice-versa.
+
+This connection between algebraic curves and compact Riemann sufaces opens up a
+world of tools from the geometry of Riemann surfaces to be realized using
+computable algebraic tools.
+
+Riemann surfaces are connected complex manifolds homeomorphic to a sphere with
+$g$ handles (or a torus with $g$ holes) where $g$ is called the {\it genus}. One
+can consider if there are any holomorphic one-forms defined on a given Riemann
+surface and what kind of cycles (simple closed paths) they could be integrated
+on. It turns out that the space of holomorphic one-forms is $g$-dimensional and
+the space of homologous paths is $2g$-dimensional. Lets label the bases elements
+of these spaces $\{\omega_1, \ldots, \omega_g\}$ and $\{ a_1, \ldots, a_g,
+b_1, \ldots, b_g\}$, respectively. Naturally, we can then determine the $2g^2$
+resulting integrals, or {\it periods},
+\begin{equation}
+  A_{ij} = \oint_{a_j} \omega_i, \quad B_{ij} = \oint_{b_j} \omega_i.
+\end{equation}
+These two quanties together form the {\it period matrix} of the Riemann surface
+/ algebraic curve.
+
+
+
+
 
 
 % ------------------------------------------------------------------------------
@@ -82,7 +129,7 @@ in the previous chapter we present efficient algorithms for their computation
 along with a collection of examples. These algorithms are gathered together in a
 Sage package called {\it Abelfunctions}. We spend some time in this chapter
 discussing the high-level design of this package including how important
-principles in software design allows the package to be easily extendible. 
+principles in software design allows the package to be easily extendible.
 
 Chapters \ref{ch:kp} and \ref{ch:determinantal} showcase the use of these
 algorithms to compute the finite-genus solutions to the Kadomtsev-Petviashvili
