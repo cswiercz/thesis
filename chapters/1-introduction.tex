@@ -3,7 +3,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this thesis we tell a story of how the theory of nonlinear waves shares a
-deep connection with the field of algebraic geometry.
+deep connection with the field of algebraic geometry. In this chapter we
+summarize this path, highlighting the primary objects at play.
 
 % ------------------------------------------------------------------------------
 \section{The Story} \label{sec:the-story}
@@ -24,7 +25,7 @@ weakly two-dimensional in that there is a dominant direction of propagation with
 smaller-scale oscillations ocurring in the transverse direction.
 
 The KP equation admits a large family of quasi-periodic solutions of the form,
-\begin{equation}
+\begin{equation} \label{eq:finite-genus}
   u(x,y,t) = 2 \partial_x^2 \theta(z, \Omega),
   \quad
   z_j(x,y,t) = U_jx + V_jy + W_jt + \phi_j
@@ -34,40 +35,41 @@ the {\it Riemann theta function of genus $g$}. This space of solutions is dense
 in the space of all periodic solutions and, therefore, fundamental to the study
 of the equation.
 
-Before continuing with the story it is important to mention that KP-like waves
-certainly appear in nature. In Figure \ref{fig:real-life} we see two examples of
-the periodic structure emerging from chaotic conditions. The photograph in
-Figure \ref{fig:ile-de-re} was captured on a particularly windy day off the
-coast of \^{I}le de R\'{e} in France. Figure \ref{san-diego-harbor} was actually
-taken in the lab where a conference room-sized model of the proposed San Diego
-harbor was constructed [TODO REF] before direct numerical simulation was
-feasible. In this image we can see two phases of waves: on the bottom left and
-top right there are long, KdV-like one-dimensional waves. In the bottom right is
-the characteristic hexagonal wave structure of a ``typical'' KP solution. We
-will later see that these structures correspond to different genera of
-quasi-periodic KP solution.
-
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{subfigure}[b]{0.45\textwidth}
     \includegraphics[width=\textwidth]{images/livekp.jpg}
     \caption{\^{I}le de R\'{e}, France}
     \label{fig:ile-de-re}
   \end{subfigure}
 
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=0.96\textwidth]{images/sd-harbor-model.jpg}
+    \includegraphics[width=\textwidth]{images/sd-harbor-model.jpg}
     \caption{Model of San Diego Harbor}
     \label{fig:san-diego-harbor}
   \end{subfigure}
   \label{fig:real-life}
 \end{figure}
 
-Perhaps miraculously, the path to deriving, as well as computing, the
-finite-genus KP solutions takes us through the field of algebraic geometry
-beginning in complex analysis with algebraic curves. An algebraic curve is the
-complex solution set to a bi-variate polynomial equation,
+Before continuing with the story it is important to mention that KP-like waves
+certainly appear in nature. In Figure \ref{fig:real-life} we see two examples of
+the periodic structure emerging from chaotic conditions. The photograph in
+Figure \ref{fig:ile-de-re} was captured on a particularly windy day off the
+coast of \^{I}le de R\'{e} in France. Figure \ref{fig:san-diego-harbor} was
+actually taken in the lab where a conference room-sized model of the proposed
+San Diego harbor was constructed [TODO REF] before direct numerical simulation
+was feasible. In this image we can see two phases of waves: on the bottom left
+and top right there are long, KdV-like one-dimensional waves. In the bottom
+right is the characteristic hexagonal wave structure of a ``typical'' KP
+solution. We will later see that these structures correspond to different genera
+of quasi-periodic KP solution.
+
+Miraculously, the path to deriving and computing the finite-genus KP solutions
+takes us through the field of algebraic geometry beginning in complex analysis
+with algebraic curves. We give a brief glimpse into this path, here, and invite
+the reader to examine the details in Chapter \ref{ch:2-background}. An algebraic
+curve is the complex solution set to a bi-variate polynomial equation,
 \begin{equation}
   C_f: \left\{
     (\lambda, \mu) \in \CC^2
@@ -78,10 +80,6 @@ complex solution set to a bi-variate polynomial equation,
 Algebraic curves are closely related to Riemann surfaces in that, modulo minor
 details, a holomorphic mapping takes every algebraic curve to a Riemann surafce
 and vice-versa.
-
-This connection between algebraic curves and compact Riemann sufaces opens up a
-world of tools from the geometry of Riemann surfaces to be realized using
-computable algebraic tools.
 
 Riemann surfaces are connected complex manifolds homeomorphic to a sphere with
 $g$ handles (or a torus with $g$ holes) where $g$ is called the {\it genus}. One
@@ -96,12 +94,30 @@ resulting integrals, or {\it periods},
   A_{ij} = \oint_{a_j} \omega_i, \quad B_{ij} = \oint_{b_j} \omega_i.
 \end{equation}
 These two quanties together form the {\it period matrix} of the Riemann surface
-/ algebraic curve.
+/ algebraic curve. After normalizing the holomorphic one-forms such that $A_{ij}
+= \delta_{ij}$, the Kronecker delta function, we obtain the period matrix $\tau
+= [I; \Omega]$. The quantity $\Omega$ appears in the finite-genus solutions
+given in Equation \ref{eq:finite-genus}, above.
 
+The other parameters, $U, V, W, \phi \in \mathbb{C}^g$ are also determined from
+the Riemann surface from a specified collection of {\it places} on the Riemann
+surface also called a {\it divisor}. The parameters themselves are computed by
+evaluating two functions, the Abel map and the Riemann constant vector, at the
+pdivisor. In particular, this divisor encodes information about the initial
+condition of the desired finite-genus solution if one were solving the KP
+initial value problem.
 
-
-
-
+Finally, this mathematical path from algebraic curves to KP solutions can be
+made extraordinarily concrete: each step outlined above can be computationally
+realized. As Field's Medalist William Thurston recognizes, without attention to
+detial this is a challenging feat. By developing algorithms along the way we
+accomplish two things. First, we provide an experimental tool for the study of
+periodic KP waves. Second, and more importantly, with the use of sound software
+design principles we create a general framework for performing analytic
+calculations on Riemann surfaces that both is computationally efficient and is
+easily extendible by future researchers. The development of such a framework
+extends the reach of the code to beyond the application to non-linear waves and
+serves the mathematical community.
 
 % ------------------------------------------------------------------------------
 \section{Outline} \label{sec:outline}
@@ -154,12 +170,12 @@ started. Thank you to the many people in the Applied Mathematics department at
 the Univeristy of Washington for shaping me into the mathematican, computer
 scientist, and human being that I am today. Bernard for his mentorship and
 comraderie, Randy for encouraging me to keep one toe in the HPSC world, Lauren
-for her friendship and advice; and Daniel, Lowell, and Alan for their friendship
-and the many hours spent at the College Inn. Thank you to Amazon AI for
-believing that I can make a difference in this world by creating great things
-and by providing a rich an supportive environment where the interface between
-mathematical research and high performance computation find a natural home.
-Finally, this work was generously supported bpy the National Science Foundation
-under grant NSF-DMS-1008001. Any opinions, findings, and conclusions or
-recommendations expressed in this material are those of the authors and do not
-necessarily reflect the views of the funding sources.
+for her friendship and counsel; and Daniel, Lowell, and Alan for their
+friendship and the many hours spent at the College Inn. Thank you to Amazon AI
+for believing that I can make a difference in this world by creating great
+things and by providing a rich an supportive environment where the interface
+between mathematical research and high performance computation find a natural
+home. Finally, this work was generously supported bpy the National Science
+Foundation under grant NSF-DMS-1008001. Any opinions, findings, and conclusions
+or recommendations expressed in this material are those of the authors and do
+not necessarily reflect the views of the funding sources.
