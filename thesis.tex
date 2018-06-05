@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage[font={small,it}]{caption}
 \usepackage{subcaption}
 \usepackage{color}
 \usepackage[section]{algorithm}
@@ -19,7 +20,8 @@
 \def\chapterautorefname{Chapter}
 \def\sectionautorefname{Section}
 \usepackage{listings}
-\renewcommand{\ttdefault}{pcr}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
 \lstdefinelanguage{Sage}[]{Python}
 {morekeywords={sage},
 sensitive=true}
@@ -30,11 +32,12 @@ sensitive=true}
         commentstyle={\it\ttfamily\color{gray}},
         keywordstyle={\bf\ttfamily\color{black}},
         stringstyle ={\ttfamily\color{gray}},
-        language = Sage,
+        language=Sage,
         basicstyle={\footnotesize\ttfamily},
         xleftmargin=1em,
         aboveskip=1em,
-        belowskip=1em
+        belowskip=1em,
+        upquote=true
       }
 
 % the quotation environment is used for section summaries

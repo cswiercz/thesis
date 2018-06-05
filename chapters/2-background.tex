@@ -18,10 +18,10 @@ connections to the Kadomtsev-Petviashvili equation introduced in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We begin with some preliminary constructions and facts from complex algebraic
-geometry. Thus section culminates in the Normalization Theorem which connects
+geometry. This section culminates in the Normalization Theorem which connects
 the subject to the study of Riemann surfaces. Although other computational
-approaches to Riemann surfaces exist, this connection make computation possible
-in the approach taken in this thesis.
+approaches to Riemann surfaces exist, this connection makes the computational
+approach possible later.
 
 %..............................................................................
 \subsection{The Projective Line}
@@ -113,7 +113,7 @@ $w$ at the beginning of this section is equivalent to identifying $U_1$ with the
 complex plane $\CC$ and $\{(1 : 0)\}$ with the point at infinity, instead.
 
 %------------------------------------------------------------------------------
-\subsection{The Projective Plane}
+\subsection{The Projective Plane} \label{sec:projective-plane}
 %------------------------------------------------------------------------------
 
 The natural environment we use in the sequel is not the complex projective line
@@ -205,23 +205,24 @@ The set of all points $(x_0, x_1, x_2)$ satisfying
 \[
   \alpha x_0 + \beta x_1 + \gamma x_2 = 0
 \]
-is called a projective line and is a simple example of a projective algebraic
-curve (of degree one). In this section we introduce various properties of
-general projective curves.
+is called a {\it projective line} and is a simple example of a projective
+algebraic curve (of degree one). In this section we introduce various properties
+of general projective curves.
 
-An {\it complex plane algebraic curve} is the zero locus of the homogenization
-of a polynomial $f \in \CC[x,y]$. That is, given a polynomial $f(x,y) =
-\alpha_n(x) y^n + \alpha_{n-1}(x)y^{n-1} + \cdots + \alpha_0(x)$ its
-homogenization is the polynomial $F \in \PP{2}\CC[x_0,x_1,x_2]$ where
+A {\it complex plane algebraic curve} is the zero locus of the homogenization of
+a polynomial $f \in \CC[x,y]$. That is, given a polynomial $f(x,y) = \alpha_n(x)
+y^n + \alpha_{n-1}(x)y^{n-1} + \cdots + \alpha_0(x)$ its homogenization is the
+polynomial $F \in \PP{2}\CC[x_0,x_1,x_2]$ where
 \[
-  F(x_0,x_1,x_2) = x_0^d f(x_1/x_0,x_2/x_0).
+  F(x_0,x_1,x_2) = x_0^d f(x_1/x_0,x_2/x_0),
 \]
-where $d$ is the degree of $F$. The homogeneity of $F$ means that we can write
+and where $d$ is the degree of $F$. The homogeneity of $F$ means that we can
+write,
 \[
   F(x_0,x_1,x_2) = \sum_{i+j+k=d} \alpha_{ijk} x_0^i x_1^j x_2^k.
 \]
 
-In Terms Of The Projective Polynomial $F$, Its Affine Part Can Be Written
+In terms of the projective polynomial $F$, its affine part can be written
 $F(x,y) = F(1,x,y)$. As in the case of a projective line, $f$ can be thought of
 as a projection of the polynomial $F$ onto $\CC^2$ and there is always a
 one-to-one correspondence between an affine polynomial and its homogenization.
@@ -258,24 +259,24 @@ point $(1 : 0 : 0)$. Singularities with multiplicity two are called {\it double
   points}, those with multiplicity three are called {\it triple points}, and so
 on.
 
-The homogeneous term $f_m$ can be factored into linear factors
+The homogeneous term $f_m$ can be factored into linear factors,
 \[
   f_m(x,y) = \prod_{j=1}^m (\alpha_j x - \beta_j y).
 \]
-We call the space $f_m(x,y) = 0$ the {\it tangent cone of the plane curve $C$}
-at $a = (1 : 0 : 0)$ consistsing of a finite number of intersecting lines $L_j :
-\alpha_j x - \beta_j y$.
+We call the space $C_m = \{(x,y) \in \CC^2 : f_m(x,y) = 0\}$ the {\it tangent
+  cone of the plane curve $C$} at $a = (1 : 0 : 0)$ which consists of a finite
+number of intersecting lines $L_j : \alpha_j x - \beta_j y$.
 
 When a generic affine point $a = (1 : c : d)$ is a singular point we write the
-affine curve in the form
+affine curve in the form,
 \[
-  f(x,y) = \sum_{i+j \geq 2}^d \tilde{c}_{ij} (x-c)^i(y-d)^j
+  f(x,y) = \sum_{i+j \geq 2}^d \tilde{c}_{ij} (x-c)^i(y-d)^j,
 \]
 which we can write as a sum of polynomials $g_n(x-c,y-d)$ homogenous in $x-c$
 and $y-d$.
 
 In the case when the singular point $a = (0 : 1 : b) \in l_\infty$ we repeat the
-above process with the affine curve
+above process with the affine curve,
 \[
   g(u,v) = \frac{1}{x_1^d} F(x_0, x_1, x_2) = F(u,1,v), \quad u =
   \frac{x_0}{x_1}, v = \frac{x_2}{x_1},
@@ -314,7 +315,7 @@ A plot of $f$ for $x,y$ real is shown in Figure \ref{fig: example-cubic}. For $a
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{images/singularities-example.eps}
+  \includegraphics[width=0.5\textwidth]{images/f2.png}
   \caption{A real plot of the curve $C : f(x,y) = y^3 + 2 x^3 y - x^7$. The plot
     suggests that $(x_0 : x_1 : x_2) = (1 : 0 : 0)$, corresponding to $(x,y) =
     (0,0)$, is a singular point of $C$.}
@@ -357,7 +358,7 @@ degree homogeneous term. The tangent cone at $a$ is $g_4(w,z) = w^4$.
 
 
 %------------------------------------------------------------------------------
-\subsection{Connection to Riemann Surfaces}
+\subsection{Connection to Riemann Surfaces} \label{subsec:connection-to-riemann-surfaces}
 %------------------------------------------------------------------------------
 
 There is a close relationship between the study of compact Riemann surfaces and
@@ -469,8 +470,8 @@ $t$. This will be discussed in more detail in the following section.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In the previous section we introduced the Normalization Theorem relating complex
-algebraic curves to Riemann surfaces. The main goal of this section is to derive
-the period matrix of a Riemann surface, the Abel Map, and the Riemann theta
+algebraic curves to Riemann surfaces. The goal of this section is to derive the
+period matrix of a Riemann surface, the Abel Map, and the Riemann theta
 function. These three objects are the primary ingredients in constructing a
 large class of solutions to the Kadomtsev--Petviashvili equation, discussed in
 \autoref{ch:kp}, and determinantal representations of plane curves, discussed in
@@ -483,11 +484,9 @@ functions, Riemann surfaces, and algebraic curves. The reader may follow along
 in the computations by downloading and installing Sage \cite{sage} from
 \url{www.sagemath.org} and following the instructions on
 \url{github.com/abefunctions/abelfunctions} for downloading and installing
-Abelfunctions.
-
-See \autoref{ch:abelfunctions} for information on the algorithms used and design
-of the software. In particular, an algorithmic perspective on the below
-components can be found in \autoref{sec:abelfunctions-algorithms}.
+Abelfunctions. See \autoref{ch:abelfunctions} for information on the algorithms
+used and design of the software. In particular, an algorithmic perspective on
+the below components can be found in \autoref{sec:abelfunctions-algorithms}.
 
 \begin{figure}
 \centering
@@ -538,10 +537,22 @@ components can be found in \autoref{sec:abelfunctions-algorithms}.
 
 
 The examples used in this chapter use the curves,
-\begin{align} \label{eq:example-curves}
-  C_2:  \\
-  C_5:  \\ 
+\begin{align}
+  C_2 &:  f_2(x,y) = y^3 + 2x^3y - x^7 = 0, \label{eq:example-curve-f2} \\
+  C_4 &:  f_4(x,y) = x^2y^3 - x^4 + 1 = 0. \label{eq:example-curve-f4}
 \end{align}
+In order to execute the code examples used in the rest of this chapter we begin
+by starting Sage, importing Abelfunctions, and defining these two curves in
+Sage,
+\begin{lstlisting}
+sage: from abelfunctions import *
+sage: R.<x,y> = QQ['x,y']; R
+Multivariate Polynomial Ring in x, y over Rational Field
+sage: f2 = y^3 + 2*x^3*y - x^7
+sage: X2 = RiemannSurface(f2)
+sage: f4 = x^2*y^3 - x^4 + 1
+sage: X4 = RiemannSurface(f4)
+\end{lstlisting}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -550,16 +561,17 @@ The examples used in this chapter use the curves,
 
 % ``From Riemann to Differential Geometry and Relativity''
 \begin{quote}
-Victor Puiseux's modesty was intimidating, and his patience and politeness were
-admirable. To a student blundering at some test, he just used to say, with a
-very sweet tone: ``I don't know whether I heard well or whether I am mistaken,
-but it seems to me that what you said is not completely true.'' --- E. Picard
+  Victor Puiseux's modesty was intimidating, and his patience and politeness
+  were admirable. To a student blundering at some test, he just used to say,
+  with a very sweet tone: ``I don't know whether I heard well or whether I am
+  mistaken, but it seems to me that what you said is not completely true.'' ---
+  E. Picard
 \end{quote}
 
-Every analytic function $f = f(x)$ admits a local Taylor series representation
-in a neighborhood about $x = \alpha$. If the function is meromorphic it still
-admits a local series representation in the form of a Laurent series. An
-extension of Taylor series are the Laurent series
+Every analytic function $f \in C^1(\RR)$ admits a local Taylor series
+representation in a neighborhood about $x = \alpha$. If the function is
+meromorphic it still admits a local series representation in the form of a
+Laurent series,
 \[
     f(x) = \sum_{n=N}^\infty c_n (x-\alpha)^n
 \]
@@ -567,11 +579,11 @@ for some $N \in \ZZ \cup \{-\infty\}$ depending on $\alpha$. In both of these
 situations the variable $x$ is a {\it local coordinate} of $f$ near the point
 $\alpha$.
 
-With algebraic curves, local coordinates are given in terms of Puiseux series,
+With algebraic curves, local coordinates are given in terms of Puiseux series
 which can be thought of as an extension of Laurent series.
 \begin{definition} \label{def: puiseux} A {\bf Puiseux series} expansion of a
   curve $C : f(x,y) = 0$ at the point $x=\alpha$ is a collection of $j =
-  1,\ldots,m \leq d = \text{deg}_y f$ series of the form
+  1,\ldots,m$ series, $m \leq d = \text{deg}_y f$, of the form
   \begin{align*}
     P_j(t) =
     \begin{cases}
@@ -580,7 +592,9 @@ which can be thought of as an extension of Laurent series.
     \end{cases}
   \end{align*}
   where $N \in \ZZ \cup \{-\infty\}$, $\alpha, \lambda_j, \beta_{jk} \in \CC$,
-  and $e_j,n_{jk} \in \ZZ$. Each Puiseux series $P_j$ is a ``place'' on $C$.
+  and $e_j,n_{jk} \in \ZZ$. Each Puiseux series $P_j$ is called a {\bf place} on
+  $C$. The variable, $t$, is called the {\bf local parameter} of the series and
+  is centered at $t=0$.
 \end{definition}
 A place $P_j = P_j(t)$ satisfies,
 \[
@@ -593,10 +607,13 @@ facts and properties of Puiseux series.
 \begin{itemize}
 \item The integer $|e_j|$ is called the {\it branching number} or {\it
     ramification index} of the series expansion at that place: $|e_j| > 1$ when
-  $x = \alpha$ is a branch point of the curve.
+  $x = \alpha$ is a branch point of the curve. If $e_j = 1$ we say that the
+  place is {\it unramified}.
 \item The number of Puiseux series $m$ at a branch point $x = \alpha$ is less
   than or equal to $d = \text{deg}_y f$. In particular, $d = \sum_{j=1}^m
-  |e_j|$.
+  |e_j|$. If $\alpha$ is not a branch point of the curve (see Section
+  \ref{subsec:background-monodromy}) then $e_j = 1$ for all $j = 1, \ldots, d$;
+  that is, there are $d$ unramified places above $x = \alpha$.
 \item The field of Puiseux series is a splitting field for $\CC[x,y] =
   \CC[x][y]$. That is, given any $f \in \CC[x,y]$ and Puiseux series expansions
   about any $x=\alpha$ we can write
@@ -607,55 +624,122 @@ facts and properties of Puiseux series.
   where the first product ranges over all Puiseux series $P_j$ at $x=\alpha$ and
   the second product ranges over all $y$-components $y_j(x_j)$ when solving for
   $t$ in terms of $x$. Note that a Puiseux series $P_j$ with ramification index
-  $|e_j|>1$ splits into $|e_j|$ $y$-series in $x$.
+  $|e_j|>1$ splits into $|e_j|$ $y$-series in $x$. Note that each unramified
+  place has only one $x$-series representation; that is $P_j$ and $y_j$ are
+  considered equivalent and in 1-1 correspondence.
 \end{itemize}
 
-\begin{example} \label{ex: 3-puiseux} Consider the curve
+\begin{example} \label{ex:f2-puiseux} Consider the example curve
   \[
-    C : f(x,y) = y^3 + 2x^3y - x^7 = 0.
+    C_2 : f_2(x,y) = y^3 + 2x^3y - x^7 = 0.
   \]
   As seen in Example \ref{ex: 2-cubic}, the point $(x,y) = (0,0)$ is a singular
-  point of $C$. The Puiseux series expansions lying above $x=0$ are all of the
-  form
-  \begin{align*}
+  point of $C$. The Puiseux series expansions lying above $x=0$ are,
+  \begin{align} \label{eq:f2-puiseux-series-expansions}
     P_1(t) &= \begin{cases}
-        x(t) = t, \\
-        y(t) = \frac{t^{4}}{2} - \frac{t^{9}}{16} + \frac{3 t^{14}}{128} + \cdots,
-      \end{cases} \\
+        x_1(t) = t, \\
+        y_1(t) = \frac{t^{4}}{2} - \frac{t^{9}}{16} + \frac{3 t^{14}}{128} + O\left(t^{15}\right)
+      \end{cases} \notag \\
     P_2(t) &= \begin{cases}
-      x(t) = - \frac{t^{2}}{2}, \\
-      y(t) =  - \frac{t^{3}}{2} - \frac{t^{8}}{64} + \frac{3 t^{13}}{4096} + \cdots.
+      x_2(t) = - \frac{t^{2}}{2}, \\
+      y_2(t) =  - \frac{t^{3}}{2} - \frac{t^{8}}{64} + \frac{3 t^{13}}{4096} + O\left(t^{14}\right)
     \end{cases}
-  \end{align*}
-  We compute these expansions using {\tt abelfunctions}.
-
+  \end{align}
+  We see that $P_1$ is unramified and $P_2$ has ramification index of $2$. The
+  sum of ramification indices of these two places is indeed $3 = \text{deg}_y
+  f_2$. $P_2$ splits into two Puiseux $x$-series: solving for $x_2$ we get,
+  \begin{equation}
+    t = \pm \sqrt{2}i x^{1/2},
+  \end{equation}
+  which, when substituted into the expression for $y_2$ gives us,
+  \begin{align}
+    y_{2,+}(x) &= -\sqrt{2}ix^{3/2} - \tfrac{1}{4} x^4 - \tfrac{3\sqrt{2}}{64}x^{13/2} + O(x^{7}) \notag \\
+    y_{2,-}(x) &= \sqrt{2}ix^{3/2} - \tfrac{1}{4} x^4 + \tfrac{3\sqrt{2}}{64}x^{13/2} + O(x^{7})
+  \end{align}
+  Substituting these truncated Puiseux series into affine expression of the
+  curve we get,
+  \begin{align}
+    f_2\left(x_1(t), y_1(t)\right)
+    &=
+    \tfrac{3}{128}t^{22} - \tfrac{19}{4096}t^{27} + O\left(t^{32}\right) \notag \\
+    f_2\left(x_2(t), y_2(t)\right)
+    &=
+      -\tfrac{3}{8192}t^{19} - \tfrac{1}{262144}t^{24} + O\left(t^{39}\right).
+  \end{align}
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.49\textwidth]{images/f2-puiseux.png}
+  \caption{A real plot of the curve $C_2: f_2(x,y) = y^3 + 2x^3y - x^7$. The
+    blue and green dashed lines are plots of the places $P_1 = \left(t, t^4/2 +
+      O(t^{9}) \right)$ and $P_2 = \left( -t^2/2, -t^3/2 + O(t^{8}) \right)$ for
+    $t \in (-1.3, 1.3)$.}
+  \label{fig:f2-puiseux}
+  \end{figure}
+  Again, the local parameter is always centered at $t=0$. Therefore, for small
+  values of $|t|$ we see that $f_2\left(x(t), y(t)\right) = O(t^{19})$ is
+  extraordinarily small in magnitude. As more terms are determined in the
+  expansions of $y_1$ and $y_2$ we expect $N \to \infty$ in $f_2\left(x(t),
+    y(t)\right) = O(t^N)$. We see that these series well-approximate the curve
+  at $x=0$ in Figure \ref{fig:f2-puiseux}.
+  
+  We can verify these Puiseux series expansions above $x = 0$ and their
+  properties using {\tt abelfunctions}.
   \begin{lstlisting}
-  from abelfunctions import *
-  from sympy.abc import x,y,t
-
-  f = y**3 + 2*x**3*y - x**7
-  alpha = 0
-
-  P = puiseux(f, x, y, alpha, nterms=3, parametric=t)
-
-  print 'Puiseux Expansions at x = \%s:'\%(alpha)
-  for Pj in P:
-      sympy.pprint(Pj)
-      print
-  \end{lstlisting}
-  \begin{lstlisting}
-  Puiseux Expansions at x = 0:
-         14    9    4 
-      3*t     t    t  
-  (t, ----- - -- + --)
-       128    16   2  
-
-     2      13    8    3 
-   -t    3*t     t    t  
-  (----, ----- - -- - --)
-    2     4096   64   2  
+  sage: P1, P2 = X2(0)  # the places above x=0 on the surface
+  sage: P1
+  (t, 1/2*t^4 + O(t^7))
+  sage: P1.puiseux_series.extend(14)  # extend the curve to at least O(t^14)
+  sage: P1
+  (t, 1/2*t^4 - 1/16*t^9 + 3/128*t^14 + O(t^19))
+  sage: P2
+  (-1/2*t^2, -1/2*t^3 + O(t^5))
+  sage: P2.puiseux_series.extend(13)  
+  sage: P2  # may include higher order terms
+  (-1/2*t^2, -1/2*t^3 - 1/64*t^8 + 3/4096*^13 - 1/16384*t^18 + O(t^20))
   \end{lstlisting}
 \end{example}
+
+\begin{example}
+  Now consider the example curve,
+  \[
+    C_4 :  f_4(x,y) = x^2y^3 - x^4 + 1 = 0.
+  \]
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.49\textwidth]{images/f4-puiseux.png}
+  \caption{A real plot of the curve $C_4: f_4(x,y) = x^2y^3 - x^4 + 1$. The
+    dashed line is a plot of the place $P = \left(-t^3, -t^{-2} +
+       O(t^{10})\right)$ for $t \in (-1.5, 1.5)$.}
+  \label{fig:f4-puiseux}
+  \end{figure}
+  A plot of the curve in the real $x,y$-plane is shown in Figure
+  \ref{fig:f4-puiseux}. There is a single place lying above $x=0$,
+  \begin{equation}
+    P(t) = \begin{cases}
+      x(t) = -t^3, \\
+      y(t) = -t^{-2} + \tfrac{1}{3}t^{10} + O(t^{15})
+    \end{cases}
+  \end{equation}
+  Unlike the places shown in Example \ref{ex:f2-puiseux} the place $P$ has a
+  component at infinity. The figure illustrates how $P$ acts as a local chart of
+  the curve: the $O(t^{15})$ series expansion well-approximates the curve at
+  $x=0$. In Abelfunctions, this place is treated like any other place.
+  \begin{lstlisting}
+  sage: P, = X4(0)
+  sage: P  
+  (-t^3, -t^-2 + O(t^0))
+  sage: P.puiseux_series.extend(14)
+  sage: P
+  (-t^3, -t^-2 + 1/3*t^10 + O(t^15))
+  \end{lstlisting}
+\end{example}
+
+Puiseux series expansions allow us to locally examine the behavior of an
+algebraic curve or Riemann surface. In particular, they provide a local
+coordinate chart centered at a point $(x,y) = (\alpha,\beta)$ on the curve in
+the sense discussed in Section \ref{subsec:connection-to-riemann-surfaces}. In
+the next section we describe a particular class of point/place on a Riemann
+surface: the singular point.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -679,105 +763,133 @@ integration methods discussed below, so we can appropriately desingularize the
 curve $C$ and obtain a Riemann surface $X$, but they are also an essential
 ingredient to computing a basis of holomorphic 1-forms on $X$.
 
-A major role of Puiseux series is to provide a local coordinate chart at a
-singular point. For singular points of the form $a = (1 : \alpha : \beta)$ the
-Puiseux series expansion $P_j$ of $f = f(x,y)$ such that $P_j(0) = (\alpha,
-\beta)$ is a coordinate chart centered at $(x,y) = (\alpha, \beta)$. $P_j$ tells
-us how to approach and pass through $(x,y) = (\alpha, \beta)$ on the curve. With
-this coordinate chart and those at other singular points of $C$ we can
-desingularize the curve and thus create an appropriate atlas for the
-corresponding Riemann surface $X$.
+For singular points of the form $a = (1 : \alpha : \beta)$ the Puiseux series
+expansion $P_j$ of $f = f(x,y)$ such that $P_j(0) = (\alpha, \beta)$ is a
+coordinate chart centered at $(x,y) = (\alpha, \beta)$. $P_j$ tells us how to
+approach and pass through $(x,y) = (\alpha, \beta)$ on the curve. Similarly,
+singular points at infinity have coordinate charts defined by the Puiseux series
+with $e_j < 0$. With these coordinate charts we can desingularize the curve and
+thus create an appropriate atlas for the corresponding Riemann surface $X$.
 
-For the purposes of computing the genus of $X$ as well as the space of
-holomorphic 1-forms $\Gamma(X,\Omega_X^1)$ on $X$ we need to compute the delta
-invariant and the multiplicity of a singularity, respectively. The following
-discussion assumes the singularity is finite. To analyze infinite singular
-points we project the curve $C$ onto the line at infinity $l_\infty$ using the
-method described in Section \ref{sec: projective-plane-curves}.
+For the purposes of later determining the genus of $X$ as well as the space of
+holomorphic 1-forms $\Gamma(X,\Omega_X^1)$ on $X$ we need to compute the {\it
+  delta invariant} and the {\it multiplicity} of a singularity. In the following
+discussion we assume for simplicity that the singularity is finite. To analyze
+infinite singular points we project the curve $C$ onto the line at infinity
+$l_\infty$ using the method described in Section \ref{sec:
+  projective-plane-curves}.
 
-{\bf Branching number.} The branching number $R$ of a singular point
-$(\alpha,\beta)$ is the sum of the branch numbers of the Puiseux series
-expansions centered at $(x,y) = (\alpha,\beta)$. That is,
+\begin{itemize}
+\item {\bf branching number} --- The branching number $R$ of a singular point
+  $(\alpha, \beta)$ is the sum of the branching numbers/ramification indices of
+  the Puiseux series centered at $(x,y) = (\alpha,\beta)$. That is,
+  \begin{equation} \label{eq:branching-number}
+    R = \!\!\!\! \sum_{\substack{j \\ P_j(0)=(\alpha,\beta)}} |e_j|.
+  \end{equation}
+\item {\bf multiplicity} --- As given in Section \ref{sec:
+    projective-plane-curves}, the multiplicity of a singular point is the degree
+  of the lowest degree non-zero homogeneous term appearing in the polynomial
+  expression for the curve centered at $(\alpha, \beta)$.
+\item {\bf delta invariant} --- The delta invariant $\delta_P$ of a singularity
+  $P$ is the number of double points concentrated at the singularity. This is
+  equal to the number of quadratic factors $(\alpha_i x - \beta_i y)^2$
+  appearing in the tangent cone at the singularity. Let $S$ be the set of all
+  singular points, finite and infinity, of $C$. Then the genus is given by
+  \begin{equation} \label{eq:genus-formula}
+    g = \frac{(d-1)(d-2)}{2} - \sum_{P \in S} \delta_P.
+  \end{equation}
+\end{itemize}
+
+\begin{example}
+  We compute the singularities of the curve,
 \[
-  R \quad = \sum_{\substack{j \\ P_j(0)=(\alpha,\beta)}} |e_j|.
+  C_2 : f_2(x,y) = y^3 + 2x^3y - x^7 = 0.
 \]
+Note that to match the notation used in Sage the finite and infinite
+singularities are presented in the format $(\alpha : \beta : 1)$ and $(\gamma :
+1 : 0)$, respectively. The order of the projective components is different than
+that presented in Section \ref{sec:projective-plane}.
+\begin{lstlisting}
+sage: S = singularities.singularities(f2)
+sage: for s, (m, delta, r) in S:
+....:     print 'Singularity:', s
+....:     print '\tmultiplicity     =', m
+....:     print '\tdelta invariant  =', delta
+....:     print '\tbranching number =', r
+....:
+Singularity: (0, 0, 1)
+	multiplicity     = 3
+	delta invariant  = 4
+	branching number = 2
+Singularity: (0, 1, 0)
+	multiplicity     = 4
+	delta invariant  = 9
+	branching number = 1
+\end{lstlisting}
+As seen in Equation \eqref{eq:f2-puiseux-series-expansions} the places $P_1$ and
+$P_2$ above $x=0$, which have $y-$component $y(0) = 0$, have ramification
+indices 1 and 2, respectively, which matches the expected multiplicity. HOLY
+SHIT! THERE MAY BE AN ISSUE, HERE.
 
-{\bf Multiplicity.} As given in Section \ref{sec: projective-plane-curves}, the
-multiplicity of a singular point is the degree of the lowest degree non-zero
-homogeneous term appearing in the polynomial expression for the curve centered
-at $(\alpha, \beta)$.
+The genus is computed using the formula in Equation \eqref{eq:genus-formula}.
+Later, performs additional checks on the genus using the geometric properties
+discussed in \ref{subsec:background-monodromy}.
+\begin{lstlisting}
+sage: singularities.genus(f,x,y)
+2  
+\end{lstlisting}
+\end{example}
 
-{\bf Delta invariant.} The delta invariant $\delta_P$ of a singularity $P$ is
-the number of double points concentrated at the singularity. This is equal to
-the number of quadratic factors $(\alpha_i x - \beta_i y)^2$ appearing in the
-tangent cone at the singularity. Let $S$ be the set of all singular points,
-finite and infinity, of $C$. Then the genus is given by
-\begin{equation} \label{eqn: genus-formula}
-  g = \frac{(d-1)(d-2)}{2} - \sum_{P \in S} \delta_P.
-\end{equation}
-
-We compute the finite singularities $a = (1 : \alpha : \beta)$ and the infinite
-singularities $a = (0 : 1 : \gamma)$ of the curve
+\begin{example}
+We compute the singularities of the curve,
 \[
-  C : f(x,y) = y^3 + 2x^3y - x^7 = 0.
+  C : f(x,y) = (y^2-x^2)(x-1)(2x-3) - 4(x^2+y^2-2x)^2.
 \]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.49\textwidth]{images/f-singularities-example.png}
+  \caption{A real plot of the curve $C: f(x,y) = (y^2-x^2)(x-1)(2x-3) -
+    4(x^2+y^2-2x)^2$. Note the singularities at $(0,0), (1,1),$ and $(1,-1)$
+    where the gradient vanishes.}
+  \label{fig:f-singularities-example}
+\end{figure}
+A plot of the curve in the real $x,y$-plane is shown in Figure
+\ref{fig:f-singularities-example}. The gradient of the curve in the affine plane
+is given by,
+\[
+  \nabla f(x,y) = \left(
+    -(12x-11)*y^2 -24x^3 + 63x^2 - 38x,
+    -16y^3 - 2(6x^2 - 11x - 3)y
+  \right).
+\]
+The gradient indeed vanishes at the points $(x,y) = (0,0), (1,1),$ and $(1,-1)$.
+In fact, these are the only singular points of this curve.
 \begin{lstlisting}
-from abelfunctions import *
-from sympy.abc import x,y
-
-f = y**3 + 2*x**3*y - x**7
-S = singularities(f,x,y)
-
-for s,(m,delta,r) in S:
-    if s[0] == 0:
-        print 'Infinite Singularity at:', s
-    else
-        print 'Finite Singularity at:  ', s
-    print '  multiplicity     =', m
-    print '  delta invariant  =', delta
-    print '  branching number =', r
-    print
+sage: f = (y^2-x^2)*(x-1)*(2*x-3) - 4*(x^2+y^2-2*x)^2
+sage: S = singularities.singularities(f4)
+sage: for s, (m, delta, r) in S:
+....:     print 'Singularity:', s
+....:     print '\tmultiplicity     =', m
+....:     print '\tdelta invariant  =', delta
+....:     print '\tbranching number =', r
+....:
+Singularity: (0, 0, 1)
+	multiplicity     = 2
+	delta invariant  = 1
+	branching number = 2
+Singularity: (1, -1, 1)
+	multiplicity     = 2
+	delta invariant  = 1
+	branching number = 2
+Singularity: (1, 1, 1)
+	multiplicity     = 2
+	delta invariant  = 1
+	branching number = 2
 \end{lstlisting}
-\begin{lstlisting}
-Finite Singularity at:   (1, 0, 0)
-  multiplicity     = 3
-  delta invariant  = 4
-  branching number = 2
+This curve is a rational curve: the total degree of the curve is $d=4$ and the
+three singularities have a delta invariant equal to one.
+\end{example}
 
-Infinite Singularity at: (0, 1, 0)
-  multiplicity     = 4
-  delta invariant  = 9
-  branching number = 1
-\end{lstlisting}
-The genus is computed using the {\tt genus()} function which, in addition to
-using the genus formula in Equation \eqref{eq: genus-formula}, performs
-additional checks on the genus using algebraic and geometric properties
-discussed below.
-\begin{lstlisting}[firstnumber=16]
-d = 7  # the homogenous degree of f is 7
-g = (d-1)*(d-2)/2
-
-for s,(m,delta,r) in S:
-    g -= delta
-
-print 'degree       =', d
-print 'genus        =', g
-print 'genus(f,x,y) =', singularities.genus(f,x,y)
-\end{lstlisting}
-\begin{lstlisting}
-degree       = 7
-genus        = 2
-genus(f,x,y) = 2
-\end{lstlisting}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Places}\label{subsec:background-places}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Divisors}\label{subsec:background-divisors}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Analytic Continuation}\label{subsec:background-analytic-continuation}
@@ -1450,6 +1562,32 @@ omega(x,y) =
 \end{lstlisting}
 From this we can infer that the adjoint polynomials of the curve are $p_1(x,y) =
 xy$ and $p_2(x,y) = x^3$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Divisors}\label{subsec:background-divisors}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The {\it valuation divisor} associated with a meromorphic one-form on $X$ is a
+direct ingredient in the determination of finite-genus solutions to the
+KP-equation. Before we define the valuation divisor we take a brief detour into
+the realm of general divisors on a Riemann surface.
+
+\begin{definition}
+  A {\bf divisor} $\DivD$ on the Riemann surface $X$ is a finite formal linear
+  combination of places $P_i$ with multiplicities $n_i$:
+  \begin{equation}
+    \DivD = \sum_i n_i P_i.
+  \end{equation}
+  The sum,
+  \begin{equation}
+    \deg \DivD = \sum_i n_i
+  \end{equation}
+  is called the {\bf degree of $\DivD$}.
+\end{definition}
+The set of all divisors on a Riemann surface forms an Abelian group
+$\text{Div}(X)$ under addition. A divisor with all $n_i \geq 0$ is called {\it
+  positive} or {\it effective}.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
