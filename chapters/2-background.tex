@@ -494,8 +494,10 @@ the below components can be found in \autoref{sec:abelfunctions-algorithms}.
   \tikzstyle{element}=[rectangle, rounded corners, thick, draw]
   \tikzstyle{leadsto}=[->, shorten >=5pt, shorten <=5pt, >=latex, thick]
 
-  % period matrix
+  % period matrix, abel map, and riemann constant vector
   \node[element] (periodmatrix) {Period Matrix};
+  %\node[element] (abelmap) {Abel Map};
+  %\node[element] (rcv) {Riemann Constant Vector};
 
   % dummy element to the left of period matrix
   \node[left=of periodmatrix, xshift=-1cm] (dummy) {};
@@ -512,12 +514,6 @@ the below components can be found in \autoref{sec:abelfunctions-algorithms}.
       edge [leadsto] (singularities)
       edge [leadsto] (intbasis);
 
-  %% \draw [->] (puiseux.east) -- (intbasis.west);
-  %% \draw [->] (puiseux.east) -- (singularities.west);
-  %% \draw [->] (intbasis.east) -- (oneforms.west);
-  %% \draw [->] (singularities.east) -- (oneforms.west);
-  %% \draw [->] (oneforms.east) -- (periodmatrix.west);
-
   % = geometric side =
   \node[element, below=of dummy] (homology) {Homology}
       edge [leadsto] (periodmatrix);
@@ -525,10 +521,6 @@ the below components can be found in \autoref{sec:abelfunctions-algorithms}.
       edge [leadsto] (homology);
   \node[element, left=of monodromy, text width=2.5cm, align=center] (ancont) {Analytic Continuation}
       edge [leadsto] (monodromy);
-
-  %% \draw [->] (ancont.east) -- (monodromy.west);
-  %% \draw [->] (monodromy.east) -- (homology.west);
-  %% \draw [->] (homology.east) -- (periodmatrix.west);
 \end{tikzpicture}
 \caption{The major computations performed by {\tt abelfunctions} and
   their dependencies on one another.}
@@ -565,7 +557,7 @@ sage: X4 = RiemannSurface(f4)
   were admirable. To a student blundering at some test, he just used to say,
   with a very sweet tone: ``I don't know whether I heard well or whether I am
   mistaken, but it seems to me that what you said is not completely true.'' ---
-  E. Picard
+  \'{E}mile Picard
 \end{quote}
 
 Every analytic function $f \in C^1(\RR)$ admits a local Taylor series
@@ -858,7 +850,7 @@ A plot of the curve in the real $x,y$-plane is shown in Figure
 is given by,
 \[
   \nabla f(x,y) = \left(
-    -(12x-11)*y^2 -24x^3 + 63x^2 - 38x,
+    -(12x-11)y^2 -24x^3 + 63x^2 - 38x, \quad
     -16y^3 - 2(6x^2 - 11x - 3)y
   \right).
 \]
@@ -895,14 +887,22 @@ three singularities have a delta invariant equal to one.
 \subsection{Analytic Continuation}\label{subsec:background-analytic-continuation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{quote}
+  The description of right lines and circles, upon which geometry is founded,
+  belongs to mechanics. Geometry does not teach us to draw these lines, but
+  requires them to be drawn. --- Isaac Newton
+\end{quote}
 
-A {\it path on a Riemann surface} is a continuous map $\gamma : [0,1] \to C
-\subset \CC^2$. That is, if $\gamma(t) = (x_\gamma(t), y_\gamma(t))$ then
-$f(x(t),y(t)) = 0$ for all $t \in [0,1]$. The roots of a polynomial are
-continuous as a function of the coefficients. Therefore, an $x$-path $x_\gamma :
-[0,1] \to \CC_x$ and an initial $y$-root $y_0 \in \CC_y$ are sufficient for
-defining a path on $C$ for the resulting $y$-path $y_\gamma : [0,1] \to \CC_y$
-is completely determined by the curve
+The root of our geometric approach toward the period matrix of a Riemann surface
+are paths on the Riemann surface. A {\it path on a Riemann surface, $X$,} is a
+continuous map $\gamma : [0,1] \to X$. On the normalization of a curve $C:
+f(x,y) = 0$ a path can be defined as $\gamma : [0,1] \to C \subset \CC^2$. That
+is, if $\gamma(t) = (x_\gamma(t), y_\gamma(t))$ then $f(x(t),y(t)) = 0$ for all
+$t \in [0,1]$. The roots of a polynomial are continuous as a function of the
+coefficients. Therefore, an $x$-path $x_\gamma : [0,1] \to \CC_x$ and an initial
+$y$-root $y_0 \in \CC_y$ are sufficient for defining a path on $C$ for the
+resulting $y$-path $y_\gamma : [0,1] \to \CC_y$ is completely determined by the
+curve
 \[
   f(x_\gamma(t),y) = 0.
 \]
