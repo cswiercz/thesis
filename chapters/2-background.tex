@@ -884,7 +884,7 @@ three singularities have a delta invariant equal to one.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Analytic Continuation}\label{subsec:background-analytic-continuation}
+\subsection{Analytic Continuation} \label{subsec:background-analytic-continuation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{quote}
@@ -896,18 +896,69 @@ three singularities have a delta invariant equal to one.
 The root of our geometric approach toward the period matrix of a Riemann surface
 are paths on the Riemann surface. A {\it path on a Riemann surface, $X$,} is a
 continuous map $\gamma : [0,1] \to X$. On the normalization of a curve $C:
-f(x,y) = 0$ a path can be defined as $\gamma : [0,1] \to C \subset \CC^2$. That
-is, if $\gamma(t) = (x_\gamma(t), y_\gamma(t))$ then $f(x(t),y(t)) = 0$ for all
-$t \in [0,1]$. The roots of a polynomial are continuous as a function of the
-coefficients. Therefore, an $x$-path $x_\gamma : [0,1] \to \CC_x$ and an initial
-$y$-root $y_0 \in \CC_y$ are sufficient for defining a path on $C$ for the
-resulting $y$-path $y_\gamma : [0,1] \to \CC_y$ is completely determined by the
-curve
+f(x,y) = 0$ a path can be defined as $\gamma : [0,1] \to C \subset \CC^2$. In
+particular, if $\gamma(t) = (x_\gamma(t), y_\gamma(t))$ then $f(x(t),y(t)) = 0$
+for all $t \in [0,1]$ including points at infinity. Because the roots of a
+polynomial are continuous as a function of the coefficients
+\cite{HarrisMartin1987}, an $x$-path $x_\gamma : [0,1] \to \CC_x$ and an initial
+$y$-root $y_0 \in \CC_y$ are sufficient for defining a path on $C$. Given these
+information, the resulting $y$-path $y_\gamma : [0,1] \to \CC_y$ is completely
+determined by the curve
 \[
-  f(x_\gamma(t),y) = 0.
+  f \big( x_\gamma(t), y_\gamma(t) \big) = 0, \quad y_\gamma(0) = y_0.
 \]
-The process of deriving this $y$-path from the data provided is referred to as
-{\it analytic continuation}.
+The process of deriving this $y$-path from the data provided is called {\it
+  analytic continuation}.
+
+\begin{example}
+A picture helps demonstrate this concept. Consider the curve,
+\[
+  C_2 : f_2(x,y) = y^3 + 2x^3y - x^7 = 0.
+\]
+Above $x=2$ are three unramified places, $y_0 = 4$, $y_1 = TODO$, and $y_2 =
+TODO$. Consider the complex $x$-path $x_\gamma(t) = 2e^{i \pi t}$: the
+counter-clockwise semi-circle of radius 2 centered at the origin beginning at
+$x=2$. As $x$ continuously varies along this path for $t \in [0,1]$ the roots
+$y_0 = y_{\gamma_0}(t)$, $y_1 = y_{\gamma_1}(t)$, and $y_2 = y_{\gamma_2}(t)$
+vary continuously as well. Figure \ref{fig:ancont-c2-circle}
+
+Consider, instead, the path $x_{\gamma} (t) = 2 - 4t$. Recall that $x=0$ has
+three places lying above it each of them at $y=0$. To properly analytically
+continue through this point along $x_{\gamma}$ we use the Puiseux series
+expansions of $C$ at $x=0$ given in Equation
+\eqref{eq:f2-puiseux-series-expansions},
+\begin{align*}
+    P_1(t) &= \begin{cases}
+        x_1(t) = t, \\
+        y_1(t) = \frac{t^{4}}{2} - \frac{t^{9}}{16} + \frac{3 t^{14}}{128} + O\left(t^{15}\right)
+      \end{cases} \\
+    P_2(t) &= \begin{cases}
+      x_2(t) = - \frac{t^{2}}{2}, \\
+      y_2(t) =  - \frac{t^{3}}{2} - \frac{t^{8}}{64} + \frac{3 t^{13}}{4096} + O\left(t^{14}\right)
+    \end{cases}
+\end{align*}
+Figure \ref{fig: ancont-c2-line} shows how these three roots continuously ``pass
+through'' the branch point.
+  
+\begin{figure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[draft,width=\textwidth]{images/livekp.jpg}
+    \includegraphics[draft,width=\textwidth]{images/livekp.jpg}
+    \caption{$x_\gamma(t) = 2\exp(i \pi t)$}
+    \label{fig:ancont-c2-circle}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[draft,width=\textwidth]{images/livekp.jpg}
+    \includegraphics[draft,width=\textwidth]{images/livekp.jpg}
+    \caption{$x_\gamma(t) = 2 - 4t$}
+    \label{fig:ancont-c2-line}
+  \end{subfigure}
+  \caption{Analytic continuation of the roots $y_0 = 4, y_1 = TODO,$ and $y_1 =
+    TODO$ of the curve $C_2$ along various paths in $\CC_x$.}
+  \label{fig:ancont-c2}
+\end{figure}
+\end{example}
 
 A {\it closed path $\gamma$ on a Riemann surface} is one such that $\gamma(0) =
 \gamma(1)$. That is, a path is closed when $x_\gamma(0) = x_\gamma(1)$ and
@@ -915,33 +966,42 @@ $y_\gamma(0) = y_\gamma(1)$. When constructing a path using an $x$-path it may
 be the case that the $x$-path $x_\gamma(t)$ is closed in $\CC_x$ but the derived
 $y$-path $y_\gamma(t)$ may not satisfy $y_\gamma(0) = y_\gamma(1)$. This
 situation is described in more detail in Section \ref{sec: monodromy} on
-monodromy groups of algebraic curves.
+monodromy groups of algebraic curves. Finally, analytic continuation can be
+extended to piecewise continuous path in $\CC_x$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Monodromy}\label{subsec:background-monodromy}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-At a generic point $x = \alpha_0 \in \CC$ a curve $C : f(x,y) = 0$ has $d$
+At a generic point $x = \alpha_0 \in \CC$ on a curve $C : f(x,y) = 0$ has $d$
 distinct ordered $y$-roots $(y_0,\ldots,y_{d-1})$ at $\alpha_0$. This collection
 of $y$-roots is sometimes called the {\it lift of} or the {\it fibre above}
 $x=\alpha_0$. However, at a point $x=b$ where both $f(x,y) = 0$ and $\partial_y
 f(x,y) = 0$ the number of distinct roots in the lift is strictly less than $d$.
-Such a point $x = b$ is called a {\it discriminant point} of $f$.
+Such a point $x = b$ is called a {\it discriminant point} of $f$. That is, a
+discriminant point has at least one ramified place lying above it.
 
-A {\it branch point} $x=b$ is a discriminant point having the property that if
-one were to analytically continue an ordered fibre around some closed path
-encircling $b$ then the elements of the fibre are permuted. Specifically, let
-$x_{\gamma} : [0,1] \to \CC$ be a piecewise differentiable oriented closed path
-in the complex $x$-plane encircling a branch point $x=b$ exactly once in the
-positive direction and let $(y_0,\ldots,y_{d-1})$ be a fixed ordering of the
-fibre at $x_\gamma(0) = b$. Then, after analytically continuing the fibre around
-$x_\gamma$ and returning to $x_\gamma(1) = b$, the fibre is equal to
-\[
+A {\it branch point} $x = b$ is a discriminant point having the property that if
+one were to analytically continue a fibre around some closed path encircling $b$
+then the elements of the fibre are permuted.
+
+Specifically, let $x_{\gamma} : [0,1] \to \CC$ be a piecewise differentiable
+oriented closed path in the complex $x$-plane encircling a branch point $x=b$
+exactly once in the positive direction and let $(y_0, \ldots, y_{d-1})$ be a
+fixed ordering of the fibre at $x_\gamma(0) = b$. Then, after analytically
+continuing the fibre around $x_\gamma$ and returning to $x_\gamma(1) = b$, the
+fibre is equal to
+\begin{equation} \label{eq:permuted-fiber}
     (y_{\pi_b(0)}, \ldots, y_{\pi_b(d-1)}),
-\]
-where $\pi_b \in S_d$ is a permutation on $d$ elements. In other wods, a
-{\it branch point} is a discriminant point with $\pi_b \neq \text{id}$.
+\end{equation}
+where $\pi_b \in S_d$ is a permutation on $d$ elements. With this notation in
+hand, a {\it branch point} is a discriminant point with $\pi_b \neq \text{id}$.
+
+\begin{example}
+  We see from the example in the previous section that the fibre $(y_0, y_1,
+  y_2) = (2, TODO, TOO)$ above $x=2$ is permuted
+\end{example}
 
 To analyze the permutation behavior of multiple branch points
 $\{b_1,\ldots,b_n\}$ we start by fixing some {\it base point} $x=\alpha_0$ in
